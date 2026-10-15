@@ -12,7 +12,7 @@ Also writes assets/js/edition.js (data the identity book borrows) and the book's
 import html, json, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '5'
+V = '6'
 
 def load(p):
     with open(os.path.join(ROOT, p), encoding='utf-8') as f:

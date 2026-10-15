@@ -2,9 +2,9 @@
    The page keeps Palestine's clock and Palestine's light. Tokens below are the midday fallback;
    assets/js/sun.js rewrites them from the sun's real altitude over Jerusalem. */
 
-@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-var.woff2?v=5") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
-@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-italic-var.woff2?v=5") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
-@font-face { font-family: "Archivo"; src: url("../fonts/archivo-var.woff2?v=5") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-var.woff2?v=6") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-italic-var.woff2?v=6") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("../fonts/archivo-var.woff2?v=6") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
 
 :root {
   /* light (midday fallback — JS replaces these) */

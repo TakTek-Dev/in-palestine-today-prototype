@@ -253,7 +253,7 @@
     var evs = [[ev.firstLight, 'First light'], [ev.sunriseJericho, 'Sunrise · Jericho'], [ev.noon, 'Noon · ' + Math.round(ev.noonAlt) + '°'], [ev.sunsetGaza, 'Sunset · Gaza'], [ev.nauticalDusk, 'Night']];
     var ANCH = ['end', 'start', 'middle', 'end', 'start'], DX = [-6, 6, 0, -6, 6];
     var narrow = W < 640;
-    if (narrow) evs = [null, [ev.sunriseJericho, 'Sunrise'], null, [ev.sunsetGaza, 'Sunset'], null];
+    if (narrow) evs = [null, [ev.sunriseJericho, W < 480 ? 'Rise' : 'Sunrise'], null, [ev.sunsetGaza, W < 480 ? 'Set' : 'Sunset'], null];
     evs.forEach(function (e, i) {
       if (!e) return;
       var x = xMin(e[0]), ep = S.position(S.instant(y, m, d, e[0] + DX[i] * 4)), light = S.sky(ep.alt, ep.rising)[0] > 0.62;
@@ -476,7 +476,8 @@
   function loader(done) {
     var el = $('.loader');
     var force = params.has('loader');
-    if (!el || (!force && (sstore('ipt-loader') || reduce.matches)) || !('animate' in Element.prototype)) { if (el) el.remove(); done(); return; }
+    // a hidden tab pauses animation frames: never hold a page behind a loader nobody can see
+    if (!el || document.hidden || (!force && (sstore('ipt-loader') || reduce.matches)) || !('animate' in Element.prototype)) { if (el) el.remove(); done(); return; }
     sstore('ipt-loader', '1');
     el.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -532,10 +533,13 @@
       } else end();
     }
     function end() {
+      clearTimeout(guard);
       el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' }).onfinish = function () { el.remove(); document.body.style.overflow = ''; };
       done();
     }
-    function skip() { if (!el.isConnected) return; el.remove(); document.body.style.overflow = ''; done(); }
+    function skip() { clearTimeout(guard); if (!el.isConnected) return; el.remove(); document.body.style.overflow = ''; done(); }
+    var guard = setTimeout(skip, 6000); // whatever happens, the day is readable within six seconds
+    document.addEventListener('visibilitychange', function v() { if (document.hidden) { document.removeEventListener('visibilitychange', v); skip(); } });
     el.addEventListener('click', skip);
     document.addEventListener('keydown', function k(e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') { document.removeEventListener('keydown', k); skip(); } });
   }
