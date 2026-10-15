@@ -1,0 +1,23 @@
+research/
+.impeccable/
+tools/out/
+PRODUCT.md
+DESIGN.md
+DESIGN*.json
+__pycache__/
+*.pyc
+
+# archive photos not used on any page (kept locally, not published)
+assets/img/photo/ph02-*.webp
+assets/img/photo/ph05-*.webp
+assets/img/photo/ph10-*.webp
+assets/img/photo/ph11-*.webp
+assets/img/photo/ph12-*.webp
+assets/img/photo/ph14-*.webp
+assets/img/photo/ph15-*.webp
+assets/img/photo/ph17-*.webp
+assets/img/photo/ph20-*.webp
+assets/img/photo/ph21-*.webp
+assets/img/photo/ph22-*.webp
+assets/img/photo/ph23-*.webp
+assets/img/photo/ph24-*.webp

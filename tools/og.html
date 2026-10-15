@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-edition="2026-10-14">
+<head>
+<meta charset="utf-8">
+<title>og</title>
+<link rel="stylesheet" href="../assets/css/ipt.css">
+<script src="../assets/js/sun.js"></script>
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  .og { position: relative; width: 1200px; height: 630px; display: grid; grid-template-rows: 1fr auto auto; padding: 64px 72px 0; box-sizing: border-box; background: var(--ground); color: var(--ink); }
+  .og .wm { font-size: 112px; align-self: center; letter-spacing: -.024em; }
+  .og .row { display: flex; justify-content: space-between; font: 600 22px var(--sans); color: var(--ink-2); padding-bottom: 26px; font-variant-numeric: tabular-nums; }
+  .og .sky { height: 64px; margin: 0 -72px; }
+</style>
+</head>
+<body>
+<div class="og" data-at="07:05">
+  <span class="wm" data-mark-fixed><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span>
+  <div class="row"><span>The Day · one day in Palestine, in order</span><span>Palestine time</span></div>
+  <div class="sky"></div>
+</div>
+<script src="../assets/js/ipt.js"></script>
+<script>
+  (function () {
+    var S = window.IPTSun, I = window.IPT;
+    var t = 7 * 60 + 5;
+    I.setMark(document.querySelector('.og .wm'), S.position(S.instant(2026, 10, 14, t)).alt, new Date());
+    var s = [];
+    for (var m = 0; m <= 1440; m += 15) { var p = S.position(S.instant(2026, 10, 14, m)); s.push(S.ok(S.sky(p.alt, p.rising)) + ' ' + (m / 14.4).toFixed(2) + '%'); }
+    document.querySelector('.og .sky').style.background = 'linear-gradient(90deg,' + s.join(',') + ')';
+  })();
+</script>
+</body>
+</html>

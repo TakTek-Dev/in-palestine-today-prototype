@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en" data-edition="2026-10-14">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identity book · In Palestine Today</title>
+<meta name="description" content="The identity of In Palestine Today: a site that keeps Palestine's clock and Palestine's light. The full stop in inpalestine.today is the sun, at its real height over Jerusalem.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#15182A">
+<meta property="og:title" content="In Palestine Today — Identity book">
+<meta property="og:description" content="A site that keeps Palestine's clock and Palestine's light.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://taktek-dev.github.io/in-palestine-today-prototype/assets/og.jpg">
+<meta property="og:url" content="https://taktek-dev.github.io/in-palestine-today-prototype/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg?v=5" type="image/svg+xml" data-live>
+<link rel="preload" href="assets/fonts/piazzolla-var.woff2?v=5" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/archivo-var.woff2?v=5" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/ipt.css?v=5">
+<link rel="stylesheet" href="assets/css/book.css?v=5">
+<script src="assets/js/sun.js?v=5"></script>
+</head>
+<body>
+<!--
+THESIS: The site keeps Palestine's clock and Palestine's light. One day told in order, each part in the light it happened in; it refuses the latest-first feed and the static cream broadsheet.
+OWN-WORLD: Palestinian limestone lit by the hour, as the sky really runs (violet dawn and blue hour before the sun is up, rose at sunrise and sunset, white noon, honey afternoon, night #0E1120), blended continuously down the page; shadow ink #15182A; one reserved sun colour that moves red to gold with altitude. Piazzolla for people, Archivo for the sun's instruments. Stories strung like beads on the sun's real path; hairlines and leader lines, no cards, no badges.
+STORY: A reader anywhere sees what time and light it is in Palestine, reads the day from first light to night, and leaves knowing what happened and on whose word.
+FIRST VIEWPORT: live sun strip; wordmark whose full stop sits at the sun's real altitude; lead headline left, archive photo right; the Day Dial full width beneath, slots strung on the sun's path with leader lines to the running order.
+FORM: Palestine Time, brief-pinned (grounded list position 2), seed c313c97c.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<a class="skip" href="#idea">Skip to the book</a>
+
+<div class="instr" aria-label="Palestine now">
+  <div class="wrap">
+    <span class="clock"><time data-clock>--:--</time><span class="tz">in Palestine</span></span>
+    <span class="hide-s" data-date></span>
+    <span class="sunline"><span data-sunstamp></span><span data-sunline>Reading the sun over Jerusalem…</span></span>
+    <span class="end"><a class="btn ghost" href="home.html">See the homepage</a></span>
+  </div>
+</div>
+
+<nav class="bk-nav" aria-label="Chapters">
+  <div class="wrap">
+    <a class="wm" href="home.html" aria-label="In Palestine Today, homepage"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun" aria-hidden="true"></span><span class="w-today">today</span></a>
+    <ol>
+      <li><a href="#idea"><time>06:05</time>Idea</a></li>
+      <li><a href="#mark"><time>06:40</time>Mark</a></li>
+      <li><a href="#light"><time>09:30</time>Light</a></li>
+      <li><a href="#type"><time>12:25</time>Type</a></li>
+      <li><a href="#elements"><time>15:30</time>Elements</a></li>
+      <li><a href="#motion"><time>17:40</time>Motion</a></li>
+      <li><a href="#voice"><time>18:20</time>Voice</a></li>
+      <li><a href="#photography"><time>19:30</time>Photography</a></li>
+      <li><a href="#applications"><time>21:00</time>Applications</a></li>
+      <li><a href="#files"><time>23:30</time>Files</a></li>
+    </ol>
+  </div>
+</nav>
+
+<main>
+<!-- ============ COVER ============ -->
+<section class="cover" aria-labelledby="cover-h">
+  <div class="cover-main wrap">
+    <h1 id="cover-h" class="sr">In Palestine Today — identity book</h1>
+    <span class="wm giant" role="img" aria-label="In Palestine Today" data-cover-mark><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span>
+    <p class="thesis">A site that keeps Palestine’s clock and Palestine’s light. Its full stop is the sun, standing at its real height over Jerusalem.</p>
+    <p class="cover-meta">Identity book for inpalestine.today · October 2026</p>
+  </div>
+  <div class="wrap">
+    <div class="scrubber">
+      <div class="row">
+        <div>
+          <label for="cover-range">Move the sun across today in Palestine</label>
+          <input class="range" id="cover-range" type="range" min="0" max="1439" step="1" value="720" aria-describedby="cover-read">
+          <div class="ticks" data-cover-ticks aria-hidden="true"></div>
+        </div>
+        <div class="read" id="cover-read" aria-live="polite">
+          <span><b data-cover-time>--:--</b>Palestine time</span>
+          <span><b data-cover-alt>—</b>Sun over Jerusalem</span>
+          <span><b data-cover-light>—</b>Light</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn ghost" type="button" data-cover-live>Back to now</button>
+        <button class="btn ghost" type="button" data-cover-play>Play the day</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IDEA ============ -->
+<section class="ch part" id="idea" data-at="06:05" aria-labelledby="idea-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>06:05</time><small data-alt-of="06:05"></small><span class="light">Dawn · The idea</span></p>
+      <h2 id="idea-h">Palestine’s clock, Palestine’s light</h2>
+    </header>
+    <div class="ch-body">
+      <div class="prose">
+        <p class="big">In Palestine Today says it wants to bring “the world closer to Palestine, one story at a time.” The identity takes that literally. Wherever you read it, the site is set to Palestine.</p>
+        <p>Its clock runs on Palestine’s own time zone, <span class="sans">Asia/Hebron</span>, not the reader’s. Its light is the sun over Jerusalem right now: the page is pale stone at noon, honey in the afternoon, violet at dusk and dark at night. Its unit is the day. The homepage tells one day in order, from the night’s raids to the last report before midnight, and each part of that day is printed in the light it happened in.</p>
+        <p>The outlet had no real logo, so the mark comes from the one thing it already owned, its address. In <b>inpalestine.today</b> the full stop is the sun. The baseline is the horizon and the ascender line is the zenith, and the stop climbs and sinks with the real sun. At night it becomes the moon, drawn in that night’s phase.</p>
+        <p>The client chose the first sample, “The Day”: a homepage built as the day’s running order, its colour moving from morning to night. This identity keeps that idea and makes it measured instead of illustrated. The times come from the sun’s position, the colours from its altitude, and every story sits on the sun’s real path.</p>
+      </div>
+      <h3 class="sub">What it refuses</h3>
+      <div class="prose">
+        <p>It doesn’t ship a latest-first feed under a red “breaking” bar, the page every outlet in the category already has. It doesn’t use a flag, a keffiyeh pattern or a watermelon as decoration. And it doesn’t use cream paper, an italic serif and small monospace labels, the costume an AI-generated “editorial” site wears by default. The colour here is light, and it changes because the sun does.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARK ============ -->
+<section class="ch part" id="mark" data-at="06:40" aria-labelledby="mark-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>06:40</time><small data-alt-of="06:40"></small><span class="light">Sunrise · The mark</span></p>
+      <h2 id="mark-h">The full stop is the sun</h2>
+    </header>
+    <div class="ch-body">
+      <div class="prose"><p>The wordmark is the domain, set in Piazzolla at two weights so it reads without spaces: <i>in</i> and <i>today</i> at 370, <i>palestine</i> at 720. Between “palestine” and “today” sits one round stop, slightly larger than the font’s own, and that stop is the sun.</p></div>
+      <div class="anatomy full" data-anatomy>
+        <div class="wrap" style="padding:0">
+          <span class="wm" role="img" aria-label="Wordmark anatomy" data-mark-fixed data-anatomy-mark><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span>
+        </div>
+        <svg class="ann" aria-hidden="true"></svg>
+      </div>
+      <h3 class="sub">A day of the mark</h3>
+      <p class="lede">The same mark through today in Palestine, each frame in its hour’s light. Above the horizon the stop climbs one ascender-height per 72°. From sunset to the end of civil twilight (−6°) it sinks through the baseline. After that the stop is the moon, drawn in tonight’s phase.</p>
+      <div class="markday full" data-markday></div>
+
+      <h3 class="sub">The monogram</h3>
+      <p class="lede">“in.” is for small spaces: social avatars, the favicon, the app icon. It keeps the same two weights and the same sun. Static files show the canonical state, sunrise, with the sun resting on the horizon. On the site the favicon follows the real sun.</p>
+      <div class="tiles">
+        <figure class="tile"><div class="box" style="background:#0E1120"><img src="assets/brand/monogram-night.svg" alt="The monogram in. in moonlight on night"></div><figcaption>Night · avatar default</figcaption></figure>
+        <figure class="tile"><div class="box" style="background:#15182A"><img src="assets/brand/monogram-shadow.svg" alt="The monogram in. in moonlight on shadow ink"></div><figcaption>Shadow · favicon</figcaption></figure>
+        <figure class="tile"><div class="box" style="background:#F5F3EE"><img src="assets/brand/monogram-stone.svg" alt="The monogram in. in shadow ink on stone"></div><figcaption>Stone · print, letterhead</figcaption></figure>
+        <figure class="tile"><div class="box" data-live-fav style="background:#15182A"></div><figcaption>Live favicon · now</figcaption></figure>
+      </div>
+
+      <h3 class="sub">Space and size</h3>
+      <p class="lede">Keep clear space of two sun diameters (0.41 em) on every side. The wordmark stays at least 120 px or 30 mm wide, where the stop is still a round 5 px. Below that, use the monogram, which holds down to 16 px.</p>
+      <div class="sizes">
+        <div><span class="wm" role="img" aria-label="Wordmark at 48 px" style="font-size:48px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">48 px · masthead</span></div>
+        <div><span class="wm" role="img" aria-label="Wordmark at 24 px" style="font-size:24px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">24 px · reading bar</span></div>
+        <div><span class="wm" role="img" aria-label="Wordmark at 16.5 px, the minimum" style="font-size:16.5px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">120 px wide · minimum</span></div>
+        <div><img src="assets/brand/monogram-shadow.svg" width="32" height="32" alt=""><span class="sz">32 px</span></div>
+        <div><img src="assets/brand/monogram-shadow.svg" width="16" height="16" alt=""><span class="sz">16 px · minimum</span></div>
+      </div>
+
+      <h3 class="sub">Don’t</h3>
+      <div class="donts">
+        <figure><span class="wm" role="img" aria-label="Wrong: spaces added" data-mark-fixed data-fixed-alt="2"><span class="w-in">in&nbsp;</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">&nbsp;today</span></span><figcaption class="cap">Don’t add spaces. The two weights do the separating.</figcaption></figure>
+        <figure><span class="wm" role="img" aria-label="Wrong: the stop coloured blue" data-mark-fixed data-fixed-alt="2" style="--sun:#2D5C9A"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><figcaption class="cap">Don’t recolour the sun. Its colour comes from its altitude, from horizon red to noon gold.</figcaption></figure>
+        <figure><span class="wm" role="img" aria-label="Wrong: set in one weight" data-mark-fixed data-fixed-alt="2" style="font-weight:720"><span class="w-in" style="font-weight:720">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today" style="font-weight:720">today</span></span><figcaption class="cap">Don’t set it in one weight. “palestine” is the heavy word.</figcaption></figure>
+        <figure class="glow"><span class="wm" role="img" aria-label="Wrong: a glow added to the sun" data-mark-fixed data-fixed-alt="30"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><figcaption class="cap">Don’t add a glow or rays. The sun is a plain disc.</figcaption></figure>
+        <figure><span class="wm" role="img" aria-label="Wrong: in capitals" data-mark-fixed data-fixed-alt="2" style="text-transform:uppercase;letter-spacing:.02em"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><figcaption class="cap">Don’t set it in capitals. A capital T would block the sun’s path.</figcaption></figure>
+        <figure><span class="wm" role="img" aria-label="Wrong: in another typeface" data-mark-fixed data-fixed-alt="2" style="font-family:Georgia,serif"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><figcaption class="cap">Don’t retype it. Use the files, or the live HTML mark on the site.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIGHT ============ -->
+<section class="ch part" id="light" data-at="09:30" aria-labelledby="light-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>09:30</time><small data-alt-of="09:30"></small><span class="light">Morning · Light</span></p>
+      <h2 id="light-h">Ten lights, one day</h2>
+    </header>
+    <div class="ch-body">
+      <div class="prose"><p>The palette is light falling on Palestinian limestone through a day. Each light has a ground for reading by day and one for reading in the dark. They are written in OKLCH so the hue can travel from rose to white to honey to violet without the lightness drifting. Between two lights the page blends, minute by minute, pinned to that day’s real sunrise, noon and sunset.</p></div>
+      <div class="lights full" data-lights></div>
+      <p class="note-s" style="margin-top:12px">Times are today’s, computed for Jerusalem. Contrast is ink on ground, measured live. Every light passes WCAG AA for body text in both its day and dark grounds.</p>
+
+      <h3 class="sub">The sun’s own colour</h3>
+      <p class="lede">The stop, the now marker and the beads on the Day Dial share one colour that tracks the sun’s altitude: red on the horizon, orange in the golden hour, gold when high. This is the only saturated colour the brand owns, and it is reserved for the sun and for “now”. It is never used for decoration, buttons or warnings.</p>
+      <div class="ramp" data-sun-ramp></div>
+      <div class="ramp-ticks" data-sun-ticks aria-hidden="true"></div>
+
+      <h3 class="sub">The sky, for the Day Dial</h3>
+      <p class="lede">The dial is the only place the page shows the sky itself, at full colour: the real sky over Palestine for the edition’s day, sampled every ten minutes.</p>
+      <div class="ramp" data-sky-ramp style="height:72px"></div>
+      <div class="ramp-ticks" data-sky-ticks aria-hidden="true"></div>
+
+      <h3 class="sub">Constants</h3>
+      <div class="consts">
+        <div><span class="chip" style="background:#15182A"></span><b>Shadow</b>#15182A · ink. A shadow under a clear sky is blue.</div>
+        <div><span class="chip" style="background:#0E1120"></span><b>Night</b>#0E1120 · ground after nautical dusk</div>
+        <div><span class="chip" style="background:#E9E8F0"></span><b>Moonlight</b>#E9E8F0 · ink at night</div>
+        <div><span class="chip" style="background:#F5F3EE"></span><b>Stone</b>#F5F3EE · print ground</div>
+        <div><span class="chip" style="background:#E4401F"></span><b>First sun</b>#E4401F · the stop at sunrise, print</div>
+        <div><span class="chip" style="background:#F0A21E"></span><b>Noon gold</b>#F0A21E · the sun high</div>
+      </div>
+      <h3 class="sub">The reader decides</h3>
+      <div class="prose"><p>By default the page follows Palestine’s sky. A reader who needs a fixed page can choose <b>Always light</b> or <b>Always dark</b> from the light switch in the top strip. The parts of the day keep their hues either way, and only the lightness is fixed. The choice is remembered on that device.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TYPE ============ -->
+<section class="ch part" id="type" data-at="12:25" aria-labelledby="type-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>12:25</time><small data-alt-of="12:25"></small><span class="light">Midday · Type</span></p>
+      <h2 id="type-h">Two voices: people, and the sun</h2>
+    </header>
+    <div class="ch-body">
+      <div class="specimen full">
+        <div class="aa" aria-hidden="true">Ag</div>
+        <div>
+          <h3 class="spec-h">Piazzolla</h3>
+          <p>Huerta Tipográfica, Argentina. Designed for the press and released under the Open Font License. It carries the people: the wordmark, headlines, reading, small caps and the slot times. Its optical-size axis sharpens headlines and opens up body text, and it has three kinds of figures, so a time, a total and a year inside a sentence each get the right numerals.</p>
+          <p class="chars" aria-hidden="true">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 ā ī ū ḥ ṣ ʿ “ ” — · °</p>
+        </div>
+      </div>
+      <div class="specimen sans full">
+        <div class="aa" aria-hidden="true">Ag</div>
+        <div>
+          <h3 class="spec-h">Archivo</h3>
+          <p>Omnibus-Type, Buenos Aires, Open Font License: the same city as Piazzolla’s foundry, and the same press-first habits. It carries the sun’s instruments: the live clock, the Day Dial, altitudes, navigation and captions. Its width axis runs the dial’s labels narrow and keeps the clock wide, and its figures are tabular.</p>
+          <p class="chars" aria-hidden="true">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 06:41 · 50° · 18:12</p>
+        </div>
+      </div>
+
+      <h3 class="sub">How they were chosen</h3>
+      <div class="prose"><p>Twelve pairings were set on the day’s real copy in morning light and in night, each with a wordmark, a slot time, a headline, a dek, a figure and the navigation. Faces from the three earlier samples were excluded (Newsreader, Schibsted Grotesk, Spline Sans Mono, Literata, Young Serif, Hanken Grotesk), and so were the faces AI-generated sites reach for by default. Piazzolla won on headline density and on numerals that read as engraved at large sizes. A second round tested its weights for the wordmark and five sans partners for the instrument voice. Mona Sans came first on its clock-like zero, then went out as part of the GitHub default wave. Archivo took the voice instead: a grotesque with a real width axis, from the same city as Piazzolla.</p></div>
+      <figure class="full" style="margin:18px 0 0"><img class="compare-shot" src="assets/img/book/type-round-1.webp" alt="The first round: twelve type pairings set on the same headline, dek, time and figure, in morning light and at night" width="1500" height="2140" loading="lazy"><figcaption>Round one, first four of twelve pairings. Full sheets: research/fonts.html and fonts2.html.</figcaption></figure>
+
+      <h3 class="sub">Scale</h3>
+      <dl class="scale">
+        <div><dt><b>Lead headline</b>Piazzolla 620 · opsz 30 · 37–66 px / 1.02 · −0.022 em</dt><dd style="font:620 clamp(1.9rem,1rem + 2.4vw,3.4rem)/1.02 var(--serif);font-variation-settings:'opsz' 30;letter-spacing:-.022em">Settlers set fire to a mosque in Mukhmas after midnight</dd></div>
+        <div><dt><b>Part of the day</b>Piazzolla 400 · opsz 30 · 28–42 px / 1.08</dt><dd style="font:400 clamp(1.6rem,1.2rem + 1.4vw,2.6rem)/1.08 var(--serif);font-variation-settings:'opsz' 30;letter-spacing:-.015em">The harvest, under watch</dd></div>
+        <div><dt><b>Slot time</b>Piazzolla 300 · tabular lining · 38–53 px</dt><dd style="font:300 3.3rem/.95 var(--serif);font-variation-settings:'opsz' 30;font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.03em">06:41</dd></div>
+        <div><dt><b>Slot headline</b>Piazzolla 620 · opsz 28 · 25–34 px / 1.1</dt><dd style="font:620 clamp(1.5rem,1.2rem + 1vw,2.15rem)/1.1 var(--serif);font-variation-settings:'opsz' 28;letter-spacing:-.014em">2,027 patients died waiting for treatment or evacuation, Gaza medical relief director says</dd></div>
+        <div><dt><b>Dek</b>Piazzolla 400 · opsz 18 · 19.5 px / 1.45</dt><dd style="font-size:1.22rem;line-height:1.45;font-variation-settings:'opsz' 18">The Colonization and Wall Resistance Commission has counted 23 arson attacks or attempts on West Bank mosques since January 2023.</dd></div>
+        <div><dt><b>Body</b>Piazzolla 400 · opsz 14 · 18 px / 1.6 · oldstyle figures</dt><dd>Thirteen of the attacks came in the first ten months of 2026, more than twice the six recorded in all of 2025.</dd></div>
+        <div><dt><b>Dateline · labels</b>Piazzolla 650 · all small caps · +0.05 em</dt><dd><span class="dateline">Mukhmas, northeast of Jerusalem —</span></dd></div>
+        <div><dt><b>Instrument</b>Archivo 500–700 · wdth 85–100 · 10.5–15 px · tabular</dt><dd class="sans" style="font-size:.9rem;font-weight:550">Sunrise · Jericho 06:41 · Noon · 50° · Sunset · Gaza 18:12</dd></div>
+      </dl>
+
+      <h3 class="sub">Numerals</h3>
+      <div class="nums">
+        <figure><div class="n" style="font-variant-numeric:tabular-nums lining-nums">06:41</div><figcaption class="cap">Times: tabular lining, so a column of times aligns.</figcaption></figure>
+        <figure><div class="n" style="font-size:1.4rem;line-height:1.5;font-variant-numeric:oldstyle-nums proportional-nums">since January 2023, 13 of them this year</div><figcaption class="cap">In running text: oldstyle, so numbers sit in the line like words.</figcaption></figure>
+        <figure><div class="n" style="font-weight:600;font-variant-numeric:lining-nums tabular-nums">74,392</div><figcaption class="cap">Figures in the ledger: lining, tabular, never animated.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ELEMENTS ============ -->
+<section class="ch part" id="elements" data-at="15:30" aria-labelledby="elements-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>15:30</time><small data-alt-of="15:30"></small><span class="light">Afternoon · Elements</span></p>
+      <h2 id="elements-h">Stories strung on the sun’s path</h2>
+    </header>
+    <div class="ch-body">
+      <h3 class="sub">The Day Dial</h3>
+      <p class="lede">Twenty-four hours of the edition’s sky, with the sun’s real altitude drawn across it, solid above the horizon and dashed beneath it. Each slot is a bead on that path, placed at the minute it was filed and coloured by the sun at that minute. Leader lines run down from each bead to the running order, which is the same list as plain links.</p>
+      <div class="dial full" data-dial>
+        <div class="dial-band"><svg class="sky" role="img" aria-label="The sky over Palestine on Wednesday 14 October 2026, with five sample slots on the sun's path"></svg></div>
+        <svg class="dial-leaders" aria-hidden="true"></svg>
+        <ol class="dial-index" style="--n:5">
+          <li><a href="home.html#s0010" data-t="00:10"><time>00:10</time><span>A village gate</span></a></li>
+          <li><a href="home.html#s0900" data-t="09:00"><time>09:00</time><span>Mukhmas mosque</span></a></li>
+          <li><a href="home.html#s1206" data-t="12:06"><time>12:06</time><span>Gaza&#x27;s count</span></a></li>
+          <li><a href="home.html#s1318" data-t="13:18"><time>13:18</time><span>Colombia&#x27;s embassy</span></a></li>
+          <li><a href="home.html#s1934" data-t="19:34"><time>19:34</time><span>21 attacks</span></a></li>
+        </ol>
+      </div>
+
+      <h3 class="sub">The sun stamp</h3>
+      <p class="lede">Every slot carries the sun as it stood when the slot was filed: a horizon line and the sun at that height, with the altitude in degrees beside it. Its state is drawn rather than coloured. A filled sun means published, a ring means updated, and a dashed ring means scheduled.</p>
+      <div class="pair">
+        <figure><span data-stamp="09:00"></span><figcaption class="cap"><b>Published.</b> Filled sun at its altitude, 09:00 · <span data-alt-of="09:00"></span>.</figcaption></figure>
+        <figure><span data-stamp="17:50" data-state="updated"></span><figcaption class="cap"><b>Updated.</b> A ring: the story moved after it was filed.</figcaption></figure>
+        <figure><span data-stamp="21:00" data-state="scheduled"></span><figcaption class="cap"><b>Scheduled, or night.</b> A dashed ring before it happens; a plain ring once the sun is down.</figcaption></figure>
+      </div>
+
+      <h3 class="sub">A slot</h3>
+      <p class="lede">The time is in Piazzolla Light, the sun stamp sits under it, and the dateline opens the dek in small caps. The kind of story goes in the source line, and the figures go in a ledger with a source under every number. There is no kicker above the headline, no badge and no card.</p>
+      <div class="anat-slot full">
+        <article class="slot" style="border-top:0">
+          <div class="when"><time>09:00</time><span class="sunat"><span data-stamp="09:00" data-state="updated"></span><span data-alt>Sun</span></span></div>
+          <div class="story">
+            <h3><a href="home.html#s0900">Settlers set fire to mosque, car and olive tree in Mukhmas, governorate says</a></h3>
+            <p class="dek"><span class="dateline">Mukhmas, northeast of Jerusalem —</span> The attack came after midnight in the village northeast of Jerusalem; the Israeli military said no suspects were identified and it had opened an investigation.</p>
+            <p class="src"><span class="kind">Update</span> · Source: <a href="https://www.wafa.ps/" rel="noopener">WAFA</a>, 14 Oct, 09:00 · the ring on the stamp means the story moved later in the day</p>
+          </div>
+          <aside class="margin" aria-label="Figures">
+            <h4>The figures</h4>
+            <dl class="ledger">
+              <div><dt>23</dt><dd>arson attacks or attempts on West Bank mosques since January 2023<cite>Colonization and Wall Resistance Commission</cite></dd></div>
+              <div><dt>13</dt><dd>of them in 2026<cite>Same source</cite></dd></div>
+            </dl>
+          </aside>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOTION ============ -->
+<section class="ch part" id="motion" data-at="17:40" aria-labelledby="motion-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>17:40</time><small data-alt-of="17:40"></small><span class="light">Golden hour · Motion</span></p>
+      <h2 id="motion-h">Everything moves at the sun’s pace</h2>
+    </header>
+    <div class="ch-body">
+      <div class="prose"><p>Motion here is the sun’s own: slow, continuous, sine in and out. Nothing bounces, snaps or pops. Content never waits on an animation: every story is visible from the first paint, and motion only changes light and position.</p></div>
+      <h3 class="sub">The loader: every visit begins at first light</h3>
+      <p class="lede">It plays on the first visit of a session and never again. Tap, Enter or Escape skips it. With reduced motion it doesn’t play at all.</p>
+      <div class="frames full" data-frames></div>
+      <p style="margin-top:14px"><a class="btn ghost" href="home.html?loader">Replay it on the homepage</a></p>
+      <dl class="timeline" style="margin-top:34px">
+        <div><dt>Horizon draws</dt><dd><b>650 ms</b></dd><dd>sine in-out, from the centre</dd><dd>A hairline across the night ground.</dd></div>
+        <div><dt>The sun rises</dt><dd><b>1200 ms</b></dd><dd>quad in-out, from 420 ms</dd><dd>From under the baseline to its real height now, warming from red to its colour. At night the moon takes the stop instead.</dd></div>
+        <div><dt>The words settle</dt><dd><b>700 ms</b></dd><dd>expo out, 110 ms apart</dd><dd>in, palestine, today, rising 0.18 em into place.</dd></div>
+        <div><dt>The lockup docks</dt><dd><b>750 ms</b></dd><dd>cubic in-out</dd><dd>The same mark moves and shrinks into the masthead while the ground turns to the light of the hour.</dd></div>
+        <div><dt>Light changes</dt><dd><b>1100 ms</b></dd><dd>sine in-out</dd><dd>When the sun crosses into a new light, or the reader moves into another part of the day.</dd></div>
+        <div><dt>The dial draws the day</dt><dd><b>1600 ms</b></dd><dd>sine in-out, once</dd><dd>The sun’s path traces left to right, and each bead appears as the path reaches its minute.</dd></div>
+        <div><dt>The stop moves</dt><dd><b>1200 ms</b></dd><dd>sine in-out</dd><dd>On a light change, or while the reader drags the sun. Live, it moves a few hundredths of an em an hour.</dd></div>
+      </dl>
+      <h3 class="sub">What it won’t do</h3>
+      <div class="prose"><p>No headlines revealed word by word, no sections sliding in as you scroll, no counting-up numbers, no parallax and no hover effects on photographs. A death toll is never animated.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VOICE ============ -->
+<section class="ch part" id="voice" data-at="18:20" aria-labelledby="voice-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>18:20</time><small data-alt-of="18:20"></small><span class="light">Sunset · Voice</span></p>
+      <h2 id="voice-h">Human first, every figure sourced</h2>
+    </header>
+    <div class="ch-body">
+      <div class="prose"><p>Headlines are in sentence case and the active voice, short enough to say aloud. People come before numbers, and every number names who counted it. Times are always Palestine time, and the site never shows the reader’s local time.</p></div>
+      <div class="hl-pair">
+        <figure><figcaption class="cap">Yes</figcaption><p>Families in al-Mawasi rebuild their tents with steel pulled from the rubble</p></figure>
+        <figure class="no"><figcaption class="cap">No</figcaption><p>HEARTBREAKING: Gaza families forced to live in tents</p></figure>
+        <figure><figcaption class="cap">Yes</figcaption><p>2,027 patients died waiting for treatment or evacuation, Gaza medical relief director says</p></figure>
+        <figure class="no"><figcaption class="cap">No</figcaption><p>Over 2,000 patients die as world watches</p></figure>
+      </div>
+      <h3 class="sub">Terms</h3>
+      <dl class="terms">
+        <div><dt>Time</dt><dd><b>06:41 Palestine time</b>, 24-hour clock, never the reader’s zone. Dates are written “Wednesday 14 October 2026”.</dd></div>
+        <div><dt>Attribution</dt><dd>Each figure and each accusation names its source in the same sentence: <b>“the official WAFA agency reported”</b>, <b>“according to UN OCHA”</b>.</dd></div>
+        <div><dt>Killed</dt><dd>Use “killed”, with the source that counted the dead. Within a quote, keep the speaker’s own word.</dd></div>
+        <div><dt>Forces and settlers</dt><dd><b>Israeli forces</b>, <b>settlers</b>, <b>the occupied West Bank</b>, <b>occupied East Jerusalem</b>.</dd></div>
+        <div><dt>Prisoners</dt><dd><b>Palestinian prisoners and detainees</b>; <b>administrative detention</b> means held without charge or trial.</dd></div>
+        <div><dt>Places</dt><dd>English forms in AP style: Mukhmas, Turmus Ayya, Kafr Malik, Masafer Yatta, al-Mawasi, Khan Younis, Issawiya, Silwan, al-Aqsa Mosque.</dd></div>
+        <div><dt>People</dt><dd>Children are never named. Private people are named only with their consent, and officials by their title.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHOTOGRAPHY ============ -->
+<section class="ch part" id="photography" data-at="19:30" aria-labelledby="photo-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>19:30</time><small data-alt-of="19:30"></small><span class="light">Dusk · Photography</span></p>
+      <h2 id="photo-h">Photographs keep their own light</h2>
+    </header>
+    <div class="ch-body">
+      <div class="prose">
+        <p>The page changes its light and photographs never do: there is no tint, no duotone and no time-of-day grade over someone’s picture. A photo sits beside the story it shows and no other. Archive photographs say so in the caption, with the date and place they were really taken.</p>
+        <p>Captions follow one order: what and where, when it was taken, then the credit and licence. <span class="cap" style="display:block;margin-top:10px">Families shelter in tents in al-Mawasi, Khan Younis, February 2025. Archive photo: author, via Wikimedia Commons, CC BY-SA 4.0.</span></p>
+      </div>
+      <figure class="full" style="margin:28px 0 0" data-book-photo></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPLICATIONS ============ -->
+<section class="ch part" id="applications" data-at="21:00" aria-labelledby="apps-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>21:00</time><small data-alt-of="21:00"></small><span class="light">Night · Applications</span></p>
+      <h2 id="apps-h">The day, carried out of the site</h2>
+    </header>
+    <div class="ch-body">
+      <div class="apps full">
+        <figure style="margin:0"><div class="post" data-post-day data-at="06:20"></div><figcaption class="cap app-cap"><b>The Day, at first light</b> · 1080 × 1350. Posted at first light each morning, on the ground of that hour, with the day’s sky as a band and three of its slots.</figcaption></figure>
+        <figure style="margin:0"><div class="post story" data-post-story data-at="12:25"></div><figcaption class="cap app-cap"><b>A story</b> · 1080 × 1350. The photo stays untouched. The panel takes the light of the hour the story was filed, and the stamp gives the time and the sun.</figcaption></figure>
+        <figure style="margin:0"><div class="og" data-og></div><figcaption class="cap app-cap"><b>Link preview</b> · 1200 × 630. Rendered for the hour the link is shared.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FILES ============ -->
+<section class="ch part" id="files" data-at="23:30" aria-labelledby="files-h">
+  <div class="wrap">
+    <header class="ch-head">
+      <p class="at"><time>23:30</time><small data-alt-of="23:30"></small><span class="light">Night · Files</span></p>
+      <h2 id="files-h">Everything in this book</h2>
+    </header>
+    <div class="ch-body">
+      <ul class="files">
+        <li><span class="thumb" style="background:#F5F3EE"><img src="assets/brand/wordmark-shadow.svg" alt=""></span><span><b>Wordmark · shadow</b><span>SVG, transparent, sunrise state</span></span><a class="dl" href="assets/brand/wordmark-shadow.svg" download>Download</a></li>
+        <li><span class="thumb" style="background:#F5F3EE"><img src="assets/brand/wordmark-shadow-on-stone.svg" alt=""></span><span><b>Wordmark · on stone</b><span>SVG with ground</span></span><a class="dl" href="assets/brand/wordmark-shadow-on-stone.svg" download>Download</a></li>
+        <li><span class="thumb" style="background:#0E1120"><img src="assets/brand/wordmark-moonlight.svg" alt=""></span><span><b>Wordmark · moonlight</b><span>SVG, transparent, for dark grounds</span></span><a class="dl" href="assets/brand/wordmark-moonlight.svg" download>Download</a></li>
+        <li><span class="thumb" style="background:#0E1120"><img src="assets/brand/wordmark-moonlight-on-night.svg" alt=""></span><span><b>Wordmark · on night</b><span>SVG with ground</span></span><a class="dl" href="assets/brand/wordmark-moonlight-on-night.svg" download>Download</a></li>
+        <li><span class="thumb"><img src="assets/brand/monogram-night.svg" alt=""></span><span><b>Monogram · night</b><span>SVG, 1:1, avatar</span></span><a class="dl" href="assets/brand/monogram-night.svg" download>Download</a></li>
+        <li><span class="thumb"><img src="assets/brand/monogram-shadow.svg" alt=""></span><span><b>Monogram · shadow</b><span>SVG, 1:1, favicon and app icon</span></span><a class="dl" href="assets/brand/monogram-shadow.svg" download>Download</a></li>
+        <li><span class="thumb"><img src="assets/brand/monogram-stone.svg" alt=""></span><span><b>Monogram · stone</b><span>SVG, 1:1, print</span></span><a class="dl" href="assets/brand/monogram-stone.svg" download>Download</a></li>
+        <li><span class="thumb"><b style="font-size:1.1rem">Aa</b></span><span><b>Piazzolla · Archivo</b><span>Variable WOFF2, Open Font License; licence texts included</span></span><span class="dl2"><a class="dl" href="assets/fonts/OFL-Piazzolla.txt">Piazzolla licence</a><a class="dl" href="assets/fonts/OFL-Archivo.txt">Archivo licence</a></span></li>
+        <li><span class="thumb"><b class="sans" style="font-size:.8rem">sun.js</b></span><span><b>The sun, as code</b><span>Palestine clock, solar position, the day’s events, moon phase, light model</span></span><a class="dl" href="assets/js/sun.js">View</a></li>
+      </ul>
+      <p class="note-s" style="margin-top:22px">Placeholders the client still has to provide: social handles, newsletter service, staff bylines, legal imprint and contact details.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot part" data-at="23:50">
+  <div class="wrap">
+    <div><span class="wm" role="img" aria-label="In Palestine Today"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span></div>
+    <div style="grid-column:2 / -1"><p class="night-clock" data-night-line>It is night in Palestine.</p></div>
+    <div class="colophon">
+      <p>Identity book for In Palestine Today, prepared by TakTek, October 2026. A prototype: content, names and sources on the homepage are real and dated; the newsletter and social accounts are placeholders.</p>
+      <p>Sun and moon computed in the browser from the NOAA solar-position equations for Jerusalem (31.777° N, 35.235° E), sunrise for Jericho and sunset for Gaza, at a sea-level horizon. Clock: IANA <span class="sans">Asia/Hebron</span>.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/marks.js?v=5"></script>
+<script src="assets/js/ipt.js?v=5"></script>
+<script src="assets/js/edition.js?v=5"></script>
+<script src="assets/js/book.js?v=5"></script>
+</body>
+</html>

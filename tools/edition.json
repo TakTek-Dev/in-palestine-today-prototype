@@ -1,0 +1,316 @@
+{
+  "lead": {
+    "item": "d11",
+    "photo": "ph03",
+    "headline": "Settlers set fire to a mosque in Mukhmas after midnight, governorate says",
+    "dek": "They also burned a car and an olive tree, and AFP footage showed Hebrew graffiti on its walls. It is one of 23 arson attacks or attempts on West Bank mosques counted since January 2023 by the Colonization and Wall Resistance Commission.",
+    "more": [
+      "d47",
+      "d29"
+    ]
+  },
+  "signup_at": "06:10",
+  "parts": [
+    {
+      "key": "night",
+      "at": "03:00",
+      "from": "00:00",
+      "to": "05:49",
+      "light": "Night",
+      "title": "Rubber bullets at a village gate",
+      "slots": [
+        {
+          "item": "d06",
+          "label": "A village gate",
+          "layout": "two",
+          "photo": "ph13",
+          "briefs": [
+            "d05",
+            "d04"
+          ],
+          "briefs_title": "The evening before"
+        }
+      ]
+    },
+    {
+      "key": "first-light",
+      "at": "06:15",
+      "from": "05:49",
+      "to": "06:41",
+      "light": "Dawn",
+      "title": "In the olive groves, a week after a killing",
+      "slots": [
+        {
+          "item": "d07",
+          "label": "Olive farmers",
+          "layout": "quote",
+          "photo": "ph04",
+          "kind": "Story",
+          "paras": 3,
+          "dateline": "Nablus"
+        }
+      ]
+    },
+    {
+      "key": "morning",
+      "at": "08:30",
+      "from": "06:41",
+      "to": "10:45",
+      "light": "Morning",
+      "title": "A mosque burned in the night, arrests at dawn",
+      "slots": [
+        {
+          "item": "d09",
+          "label": "Dawn arrests",
+          "briefs": [
+            "d12",
+            "d15"
+          ],
+          "margin_from": [
+            "d12"
+          ]
+        },
+        {
+          "item": "d11",
+          "label": "Mukhmas mosque",
+          "layout": "quote",
+          "state": "updated",
+          "paras": 3,
+          "briefs": [
+            "d42",
+            "d13"
+          ],
+          "briefs_title": "Later, and around it",
+          "margin": "ledger",
+          "margin_from": [
+            "d42",
+            "d13"
+          ],
+          "margin_max": 4,
+          "margin_own": false,
+          "dek": "The attack came after midnight; the Israeli military said no suspects were identified and it had opened an investigation."
+        },
+        {
+          "item": "d17",
+          "label": "Masafer Yatta",
+          "layout": "two",
+          "photo": "ph08",
+          "paras": 2,
+          "dateline": "Masafer Yatta, south of Hebron"
+        }
+      ]
+    },
+    {
+      "key": "midday",
+      "at": "12:25",
+      "from": "10:45",
+      "to": "14:05",
+      "light": "Midday",
+      "title": "The harvest under watch, and Gaza's count",
+      "slots": [
+        {
+          "item": "d19",
+          "label": "The harvest",
+          "photo": "ph01",
+          "paras": 2,
+          "briefs": [
+            "d14",
+            "d18",
+            "d20",
+            "d23"
+          ],
+          "margin_from": [
+            "d23"
+          ]
+        },
+        {
+          "item": "d21",
+          "label": "A lawyer for children",
+          "layout": "quote",
+          "kind": "Story",
+          "paras": 2,
+          "briefs": [
+            "d25",
+            "d30"
+          ],
+          "margin": "ledger",
+          "margin_from": [
+            "d30"
+          ],
+          "margin_max": 4
+        },
+        {
+          "item": "d22",
+          "label": "Gaza's count",
+          "layout": "big",
+          "kind": "Figures",
+          "paras": 3,
+          "briefs": [
+            "d10",
+            "d27",
+            "d26",
+            "d16"
+          ],
+          "margin": "ledger",
+          "margin_from": [
+            "d27"
+          ],
+          "margin_max": 5
+        },
+        {
+          "item": "d24",
+          "label": "Jerusalem homes",
+          "layout": "two",
+          "photo": "ph09",
+          "paras": 2
+        },
+        {
+          "item": "d29",
+          "label": "Colombia's embassy",
+          "state": "updated",
+          "paras": 3,
+          "briefs": [
+            "d41",
+            "d44",
+            "d53"
+          ],
+          "briefs_title": "Through the day"
+        }
+      ]
+    },
+    {
+      "key": "afternoon",
+      "at": "15:30",
+      "from": "14:05",
+      "to": "17:23",
+      "light": "Afternoon",
+      "title": "Tents patched before the first rain",
+      "slots": [
+        {
+          "item": "d35",
+          "label": "Tents before rain",
+          "layout": "big",
+          "photo": "ph16",
+          "kind": "Story",
+          "paras": 3,
+          "briefs": [
+            "d01",
+            "d34",
+            "d02"
+          ],
+          "briefs_title": "More from Gaza’s day",
+          "margin": "ledger",
+          "margin_from": [
+            "d01"
+          ],
+          "margin_max": 4,
+          "dateline": "Khan Younis, southern Gaza Strip"
+        }
+      ]
+    },
+    {
+      "key": "sunset",
+      "at": "17:50",
+      "from": "17:23",
+      "to": "18:33",
+      "light": "Golden hour · Sunset",
+      "title": "A hospital raided, an army chief's warning",
+      "slots": [
+        {
+          "item": "d39",
+          "label": "Army chief",
+          "layout": "quote",
+          "paras": 3,
+          "dateline": "West Bank"
+        },
+        {
+          "item": "d40",
+          "label": "Salfit hospital",
+          "layout": "two",
+          "photo": "ph07",
+          "paras": 2,
+          "briefs": [
+            "d28",
+            "d31",
+            "d32",
+            "d33"
+          ],
+          "briefs_title": "Raids and closures, this afternoon",
+          "margin_from": [
+            "d33",
+            "d28"
+          ],
+          "dateline": "Salfit"
+        }
+      ]
+    },
+    {
+      "key": "night-2",
+      "at": "21:00",
+      "from": "18:33",
+      "to": "24:00",
+      "light": "Dusk and night",
+      "title": "Twenty-one attacks, and the day's last count",
+      "slots": [
+        {
+          "item": "d46",
+          "label": "Gaza, evening",
+          "paras": 3,
+          "briefs": [
+            "d50"
+          ],
+          "dateline": "Gaza Strip"
+        },
+        {
+          "item": "d47",
+          "label": "21 attacks",
+          "layout": "big",
+          "photo": "ph06",
+          "kind": "Figures",
+          "paras": 3,
+          "briefs": [
+            "d43",
+            "d45"
+          ]
+        },
+        {
+          "item": "d52",
+          "label": "The day closes",
+          "kind": "Round-up",
+          "paras": 3,
+          "briefs": [
+            "d08",
+            "d36",
+            "d37",
+            "d38",
+            "d48",
+            "d49",
+            "d51"
+          ],
+          "briefs_title": "Also today",
+          "ahead": true,
+          "margin": {
+            "photo": "ph19"
+          }
+        }
+      ]
+    }
+  ],
+  "book_top": [
+    "d11",
+    "d29",
+    "d47"
+  ],
+  "book_photo": {
+    "photo": "ph01",
+    "item": "d19"
+  },
+  "book_section_photo": "ph18",
+  "book_dial": [
+    "s0010",
+    "s0900",
+    "s1206",
+    "s1318",
+    "s1934"
+  ]
+}
