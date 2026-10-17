@@ -187,7 +187,7 @@
   if (fr) {
     var F = [
       ['Horizon', -9, 0, 0, '0 ms'],
-      ['The sun rises', -2, 1, 0.4, '600 ms'],
+      ['The sun rises', -2, 1, 0.7, '600 ms'],
       ['Words settle', 14, 1, 1, '1100 ms'],
       ['Its height now', 24, 1, 1, '1400 ms'],
       ['Docked', 24, 0, 1, '2400 ms']

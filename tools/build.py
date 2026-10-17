@@ -19,7 +19,7 @@ Writes (never hand-edit these):
 import datetime, glob, html, json, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '9'
+V = '10'
 BASE_URL = 'https://taktek-dev.github.io/in-palestine-today-prototype/'
 REPO_BASE = '/in-palestine-today-prototype/'
 
@@ -53,6 +53,7 @@ for p in sorted(glob.glob(os.path.join(ROOT, 'tools', 'editions', '*.json'))):
     EDITIONS[os.path.basename(p)[:-5]] = load(os.path.relpath(p, ROOT))
 DATES = sorted(EDITIONS)                  # oldest → newest
 LATEST = DATES[-1]
+SITE = load(os.path.join(ROOT, 'tools', 'site.json'))   # sample contacts, accounts and names: one file to replace
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 SHORTM = [m[:3] for m in MONTHS]
@@ -204,10 +205,14 @@ def credits_for(body):
     return f'      <p>Archive photographs from Wikimedia Commons, each dated and placed in its caption; none shows the events reported beside it: {cred}.</p>\n'
 
 STANDARD_NOTE = ('      <p>Every report links to the source it was read from, and each figure names who counted it. Times are when the source published, in Palestine time (UTC+3). '
-                 'A TakTek prototype for In Palestine Today: social accounts, the newsletter service and masthead details are placeholders.</p>')
+                 'A TakTek prototype for In Palestine Today: staff names, social accounts, contact details and the newsletter service are samples to be replaced.</p>')
+
+def follow_list(R):
+    links = ''.join(f'<li><a href="{e(u)}" rel="noopener me">{e(n)}</a></li>' for n, _, u in SITE['social'])
+    return links + f'<li><a href="{R}feed.xml">RSS feed</a></li><li><a href="#signup">The Day by email</a></li>'
 
 def page(path, *, title, desc, body, edition=None, nav=None, skip='Skip to the content', css=(), js=(), og_type='website', og_title=None,
-         find=False, scrub=False, base=False, bodyclass='', jsonld='', og_image=None, og_alt=None, art_meta=''):
+         find=False, scrub=False, base=False, bodyclass='', jsonld='', og_image=None, og_alt=None, art_meta='', head_extra=''):
     depth = path.count('/')
     R = '../' * depth
     navs = []
@@ -220,12 +225,15 @@ def page(path, *, title, desc, body, edition=None, nav=None, skip='Skip to the c
                  '{{OGALT}}': e(og_alt or 'The In Palestine Today wordmark over a day of Palestine’s sky'), '{{ARTMETA}}': art_meta,
                  '{{R}}': R, '{{V}}': V, '{{CSS}}': ''.join(f'<link rel="stylesheet" href="{R}assets/css/{c}?v={V}">\n' for c in css),
                  '{{BASE}}': ('<script>if(/github\\.io$/.test(location.hostname))document.write(\'<base href="' + REPO_BASE + '">\')</script>\n') if base else '',
-                 '{{JSONLD}}': jsonld}.items():
+                 '{{JSONLD}}': head_extra + jsonld}.items():
         head = head.replace(k, v)
     top = (TPL['top'].replace('{{BODYCLASS}}', bodyclass).replace('{{SKIP}}', skip).replace('{{NAV}}', '\n'.join(navs))
            .replace('{{FIND}}', find_panel(R) if find else search_link(R)).replace('{{SCRUB}}', SCRUB if scrub else '').replace('{{R}}', R))
     foot = TPL['foot']
+    latest_live = LIVES.get(max(LIVES)) if LIVES else None
     for k, v in {'{{EDITION}}': edition or LATEST, '{{R}}': R, '{{V}}': V, '{{CREDITS}}': credits_for(body) + STANDARD_NOTE,
+                 '{{LIVE}}': f'<li><a href="{R}{live_path(latest_live)}">Live coverage</a></li>' if latest_live else '',
+                 '{{FOLLOW}}': follow_list(R), '{{EMAIL}}': f'{R}email/the-day-{LATEST}.html',
                  '{{JS}}': ''.join(f'<script src="{R}assets/js/{j}?v={V}"></script>\n' for j in js)}.items():
         foot = foot.replace(k, v)
     if base:   # a missing path can be any depth: the <base> makes the frame's root-relative links resolve
@@ -236,7 +244,7 @@ def page(path, *, title, desc, body, edition=None, nav=None, skip='Skip to the c
     return out
 
 # ---------------------------------------------------------------- small renderers
-def photo_fig(pid, R, cls='', sizes='(max-width: 760px) 100vw, 760px', ratio=None, eager=False):
+def photo_fig(pid, R, cls='', sizes='(max-width: 760px) 100vw, 760px', ratio=None, eager=False, priority=None):
     p = PH[pid]
     f = R + p['file']
     w, h = p.get('w', 1280), p.get('h', 853)
@@ -246,7 +254,7 @@ def photo_fig(pid, R, cls='', sizes='(max-width: 760px) 100vw, 760px', ratio=Non
     lic_html = f'<a href="{e(p.get("license_url"))}" rel="noopener license">{lic}</a>' if p.get('license_url') else lic
     src_html = f'<a href="{e(p.get("commons_page"))}" rel="noopener">{credit}</a>' if p.get('commons_page') else credit
     st = f' style="aspect-ratio:{ratio}"' if ratio else ''
-    load = 'eager" fetchpriority="high' if eager else 'lazy'
+    load = ('eager" fetchpriority="high' if (eager if priority is None else priority) else 'eager') if eager else 'lazy'
     return (f'<figure{(" class=" + chr(34) + cls + chr(34)) if cls else ""}><img src="{e(f)}-1280.webp" srcset="{e(f)}-640.webp 640w, {e(f)}-1280.webp 1280w" sizes="{sizes}" '
             f'width="{w}" height="{h}" alt="{e(p.get("alt", ""))}" loading="{load}" decoding="async"{st}>'
             f'<figcaption>{cap} {src_html}, {lic_html}.</figcaption></figure>')
@@ -387,13 +395,90 @@ def render_slot(s, R, date):
 def dial_html(date, R, links, *, mini=False, label='', legend=False, leaders=True, delay=0, hidden_index=False):
     """links: list of (time, href, label, classes)."""
     n = len(links)
-    lis = ''.join(f'<li><a href="{h}" data-t="{t}"{(" class=" + chr(34) + c + chr(34)) if c else ""}><time>{t}</time><span>{e(l)}</span></a></li>' for t, h, l, c in links)
+    lis = ''.join(f'<li><a href="{h}" data-t="{t}"{(" class=" + chr(34) + c + chr(34)) if c else ""}><time>{t}</time> <span>{e(l)}</span></a></li>' for t, h, l, c in links)
     idx = f'<ol class="dial-index" style="--n:{n}"{" hidden" if hidden_index else ""}>{lis}</ol>'
     return (f'<div class="dial{" mini" if mini else ""}" data-dial data-date="{date}"{(" data-delay=" + chr(34) + str(delay) + chr(34)) if delay else ""}{" aria-hidden=" + chr(34) + "true" + chr(34) if hidden_index else ""}>'
             f'<div class="dial-band"><svg class="sky" role="img" aria-label="{e(label)}"></svg></div>'
             + ('<svg class="dial-leaders" aria-hidden="true"></svg>' if leaders and not mini else '')
             + (f'<nav aria-label="The running order of {long_date(date)}">{idx}</nav>' if not hidden_index else idx)
             + '</div>' + ('<p class="dial-legend" data-dial-legend></p>' if legend else ''))
+
+# ---------------------------------------------------------------- live coverage
+LIVES = {}
+for _f in sorted(glob.glob(os.path.join(ROOT, 'tools', 'live', '*.json'))):
+    _c = load(_f)
+    LIVES[_c['date']] = _c
+
+def live_path(cfg):
+    return 'live/' + cfg['slug'] + '.html'
+
+def live_band(date, R):
+    """The strip that opens an edition while its day has live coverage."""
+    cfg = LIVES.get(date)
+    if not cfg:
+        return ''
+    last = max(ITEMS[x].get('time') or '' for x in cfg['items'])
+    return (f'<aside class="liveband" aria-label="Live coverage" data-date="{date}"><div class="wrap">'
+            f'<a href="{R}{live_path(cfg)}"><span class="lv-state{"" if date == LATEST else " is-ended"}"><span class="lv-dot" aria-hidden="true"></span><b>{"Live" if date == LATEST else "Ended"}</b></span> '
+            f'<span class="lb-h">{esc_text(cfg["title"])}</span> <span class="lb-t">{len(cfg["items"])} updates · last {last}</span></a></div></aside>\n')
+
+def render_live(cfg):
+    date = cfg['date']
+    path = live_path(cfg)
+    R = '../'
+    ids = sorted(cfg['items'], key=lambda x: ITEMS[x].get('time') or '')
+    first, last = ITEMS[ids[0]].get('time'), ITEMS[ids[-1]].get('time')
+    def entry(x):
+        it = ITEMS[x]
+        t = it.get('time') or '12:00'
+        aid = 'lv-' + t.replace(':', '')
+        photo = article_photo(x)
+        q = it.get('quote')
+        quote = (f'<blockquote class="lv-quote"><p>{esc_text(q["text"])}</p><footer>{e(q.get("who", ""))}{", " + e(q["role"]) if q.get("role") else ""}</footer></blockquote>') if q else ''
+        nums = [n for n in it.get('numbers', []) if str(n.get('value')).strip() not in ('1', 'one')][:3]
+        body = it.get('body', [])
+        # each update is printed in the light of its own minute, so the coverage reads as the day turned upside down
+        return (f'<li class="lv part" id="{aid}" data-at="{t}" data-time="{t}"><div class="wrap lv-in"><div class="when"><a class="lv-t" href="#{aid}" aria-label="Link to the {t} update"><time datetime="{tattr(date, t)}">{t}</time></a>'
+                f'<span class="sunat"><span data-stamp="{t}"></span><span data-alt>Sun</span></span></div><div class="lv-text">'
+                f'<h2><a href="{R}{ITEM_URL[x]}">{esc_text(it["headline"])}</a></h2>'
+                f'<p class="dek">{dateline(it)}{esc_text(it.get("dek", ""))}</p>'
+                + (f'<p>{esc_text(body[0])}</p>' if body else '')
+                + (photo_fig(photo, R, sizes='(max-width: 760px) 100vw, 640px') if photo else '')
+                + quote
+                + (f'<div class="lv-figs">{ledger(nums, "The figures", h="h3")}</div>' if nums else '')
+                + f'<p class="src"><span class="kind">{e(KIND.get(it.get("kind"), "Update"))}</span> · Source: <a href="{e(it.get("source_url"))}" rel="noopener">{e(it.get("source_name"))}</a> · <a href="{R}{ITEM_URL[x]}">The full report</a></p>'
+                + '</div></div></li>')
+    keys = ''.join(f'<li><a href="#lv-{(ITEMS[x].get("time") or "12:00").replace(":", "")}"><time>{ITEMS[x].get("time")}</time> <span>{esc_text(ITEMS[x]["headline"])}</span></a></li>' for x in cfg['key'])
+    figs = []
+    for x in cfg['key']:
+        figs += [n for n in ITEMS[x].get('numbers', []) if str(n.get('value')).strip() not in ('1', 'one')]
+    side = (f'<aside class="margin lv-side" aria-label="Key points"><h2 class="lh">Key points</h2><ol class="lv-keys">{keys}</ol>'
+            + (ledger(figs[:3], 'Where things stand', h='h2') if figs else '') + '</aside>')
+    links = [(ITEMS[x].get('time') or '12:00', '#lv-' + (ITEMS[x].get('time') or '12:00').replace(':', ''), re.split(r'[;,]| and ', clean_place(ITEMS[x].get('place', '')))[0].strip()[:28], '') for x in ids]
+    canon = BASE_URL + path
+    nets = share_links(canon, smart(cfg['title']), smart(cfg['dek']))
+    acts = ('<div class="art-acts" data-share><button type="button" class="btn ghost" data-share-open aria-expanded="false" aria-controls="sh-top">Share</button>'
+            '<button type="button" class="btn ghost" data-copy>Copy link</button><span class="msg" role="status"></span>'
+            '<div class="share-pop" id="sh-top" role="group" aria-label="Share this coverage" hidden><ul>'
+            + ''.join(f'<li><a class="sh" href="{e(u)}" target="_blank" rel="noopener" data-net="{k}">{n}</a></li>' for k, n, u in nets)
+            + '</ul><button type="button" class="sh-native" data-native hidden>More apps on this device</button></div></div>')
+    body = (f'<main id="main">\n<article class="live" data-date="{date}" data-last="{last}" aria-labelledby="lv-h">'
+            f'<header class="part live-head" data-at="{last}"><div class="wrap"><div class="live-top"><div class="when">'
+            f'<p class="lv-state{"" if date == LATEST else " is-ended"}"><span class="lv-dot" aria-hidden="true"></span><b>{"Live" if date == LATEST else "Coverage ended"}</b></p>'
+            f'<p class="lv-upd">Last update <time datetime="{tattr(date, last)}">{last}</time></p></div>'
+            f'<div class="art-head"><h1 id="lv-h">{esc_text(cfg["title"])}</h1><p class="dek">{esc_text(cfg["dek"])}</p>'
+            f'<p class="art-meta"><span class="kind">Live coverage</span> · {long_date(date)} · {len(ids)} updates, {first} to {last} Palestine time · '
+            f'<a href="{R}{edition_path(date)}">The whole day</a></p>{acts}</div>{side}</div>'
+            + dial_html(date, R, links, label=f'The sky over Palestine on {long_date(date)}, with each update of this coverage on the sun’s path', legend=False)
+            + '<div class="sbar lv-bar"><p class="scount" data-lv-count>Newest first. Each update is printed in the light of its minute.</p>'
+            '<p class="sorder" role="group" aria-label="Order"><button type="button" data-lv-order="new" aria-pressed="true">Newest first</button>'
+            '<button type="button" data-lv-order="day" aria-pressed="false">In order of the day</button></p></div>'
+            '</div></header>\n'
+            f'<ol class="lv-list" data-lv-list aria-label="Updates">{"".join(entry(x) for x in reversed(ids))}</ol>\n'
+            '</article>\n</main>\n')
+    page(path, title=f'Live: {cfg["title"]} · In Palestine Today', desc=cfg['dek'], body=body, edition=date, nav=None,
+         skip='Skip to the coverage', css=('pages.css',), js=('pages.js',), og_type='article', og_title=f'Live: {smart(cfg["title"])}', og_alt=smart(cfg['title']),
+         art_meta=f'<meta property="article:published_time" content="{date}T{first}:00+03:00">\n<meta property="article:modified_time" content="{date}T{last}:00+03:00">\n')
 
 def render_edition(date):
     plan = EDITIONS[date]
@@ -422,7 +507,7 @@ def render_edition(date):
         f'<h2 class="hl" id="lead-h"><a href="{R}{ITEM_URL[L["item"]]}">{esc_text(L.get("headline") or lit["headline"])}</a></h2>'
         f'<p class="dek">{dateline(lit, L.get("dateline"))}{esc_text(L.get("dek") or lit.get("dek", ""))}</p>'
         f'<p class="filed"><span data-stamp="{lead_t}"></span><span>Filed {lead_t} · <span data-alt-at="{lead_t}"></span> · {e(lit.get("source_name", ""))}</span><a href="#{lead_slot["_id"] if lead_slot else ""}">Read it in its hour</a></p>'
-        f'</div>{photo_fig(L["photo"], R, sizes="(max-width: 860px) 100vw, 540px", ratio="3 / 2", eager=True)}</article>')
+        f'</div>{photo_fig(L["photo"], R, sizes="(max-width: 860px) 100vw, 540px", ratio="3 / 2", eager=True, priority=False)}</article>')
     more_html = f'<div class="more-lead">{"".join(more)}</div>' if more else ''
     index = sorted(((s['_time'], '#' + s['_id'], s.get('label') or item(s['item'])['headline'][:40], '') for s in slots), key=lambda x: x[0])
     times = [x[0] for x in index]
@@ -434,7 +519,7 @@ def render_edition(date):
         f'<a href="{R}{edition_path(next_d)}" rel="next">{weekday(next_d)}’s edition</a>' if next_d else '',
         f'<a href="{R}days.html">The Days</a>'] if x)
     body = (
-        f'<main id="main">\n<section class="edition" aria-labelledby="ed-h"><div class="wrap">'
+        f'<main id="main">\n{live_band(date, R)}<section class="edition" aria-labelledby="ed-h"><div class="wrap">'
         f'<div class="edhead"><h1 id="ed-h">The Day <span>· {long_date(date)}</span></h1>'
         f'<p>{n_reports(date)} reports · first filed {times[0]} · last {times[-1]} · Palestine time (UTC+3) <a data-continue hidden href="#main">Continue from <b>—</b></a></p>'
         f'<p class="daynav">{daynav}</p></div>'
@@ -443,7 +528,10 @@ def render_edition(date):
         + more_html + '</div></section>\n' + '\n'.join(parts_html) + '\n</main>\n')
     title = f'The Day, {long_date(date)} · In Palestine Today'
     desc = f'One day in Palestine, in order: {long_date(date)} from the night to the last report before midnight, every figure sourced, in Palestine time.'
-    page(path, title=title, desc=desc, body=body, edition=date, nav='day', skip='Skip to the day', find=True, scrub=True, og_title=f'The Day · {long_date(date)} · In Palestine Today')
+    lp = PH[L['photo']]['file']
+    preload = (f'<link rel="preload" as="image" media="(min-width: 861px)" fetchpriority="high" imagesrcset="{R}{lp}-640.webp 640w, {R}{lp}-1280.webp 1280w" '
+               'imagesizes="(max-width: 860px) 100vw, 540px">' + chr(10))
+    page(path, title=title, desc=desc, body=body, edition=date, nav='day', skip='Skip to the day', find=True, scrub=True, og_title=f'The Day · {long_date(date)} · In Palestine Today', head_extra=preload)
     return slots
 
 # ---------------------------------------------------------------- report and story pages
@@ -495,6 +583,10 @@ def card_url(iid, photo):
     if os.path.exists(os.path.join(ROOT, f)):
         return BASE_URL + f
     return (BASE_URL + PH[photo]['file'] + '-1280.webp') if photo else None
+
+def byline(it):
+    who = SITE['desk_editor'].get(it.get('region'))
+    return f'<p class="art-by">Edited by <b>{e(who[0])}</b>, {e(who[1])}</p>' if who else ''
 
 def share_links(url, headline, dek):
     from urllib.parse import quote
@@ -580,7 +672,7 @@ def render_article(iid):
                 '<p class="msg" role="status"></p></section>')
     body = (f'<main id="main">\n<article class="art{" is-story" if story else ""}" data-at="{t or "12:00"}" aria-labelledby="art-h"><div class="wrap">'
             f'<div class="art-top"><div class="when"><time datetime="{tattr(date, t)}">{t or "—"}</time><span class="sunat"><span data-stamp="{t or "12:00"}"></span><span data-alt>Sun</span></span>{upd}</div>'
-            f'<header class="art-head"><h1 id="art-h">{esc_text(it["headline"])}</h1><p class="dek">{dateline(it)}{esc_text(it.get("dek", ""))}</p>{meta}{acts}</header></div>'
+            f'<header class="art-head"><h1 id="art-h">{esc_text(it["headline"])}</h1><p class="dek">{dateline(it)}{esc_text(it.get("dek", ""))}</p>{meta}{byline(it)}{acts}</header></div>'
             + fig
             + f'<div class="art-body"><div></div><div class="art-text">{"".join(paras)}{endshare}</div>{margin}</div>'
             + thread_html + '</div></article>\n' + inday + also + '\n</main>\n')
@@ -799,17 +891,92 @@ def render_about():
   </div></div></section>
   <section class="ab part" data-at="18:12" id="corrections" aria-labelledby="ab3"><div class="wrap ab-in"><p class="ab-at"><time>18:12</time><span>Sunset into Gaza’s sea</span></p><div class="prose">
     <h2 id="ab3">Corrections</h2>
-    <p>When we get something wrong, we correct the report, say what changed and when, and keep the change visible at the end of the report. Write to <span class="ph">[corrections address]</span>.</p>
+    <p>When we get something wrong, we correct the report, say what changed and when, and keep the change visible at the end of the report. Write to {CORR}.</p>
+  </div></div></section>
+  <section class="ab part" data-at="19:30" id="newsroom" aria-labelledby="ab5"><div class="wrap ab-in"><p class="ab-at"><time>19:30</time><span>Dusk</span></p><div class="prose">
+    <h2 id="ab5">The newsroom</h2>
+    <dl class="staff">{STAFF}</dl>
   </div></div></section>
   <section class="ab part" data-at="21:00" id="contact" aria-labelledby="ab4"><div class="wrap ab-in"><p class="ab-at"><time>21:00</time><span>Night</span></p><div class="prose">
     <h2 id="ab4">Contact</h2>
-    <p>Newsroom: <span class="ph">[newsroom email]</span>. Tips and documents: <span class="ph">[secure contact]</span>. Editors: <span class="ph">[names and roles]</span>. Publisher and registered address: <span class="ph">[legal imprint]</span>.</p>
+    <dl class="staff">{CONTACT}</dl>
   </div></div></section>
 </div>
 </main>
 '''
     body = body.replace('{D52}', ITEM_URL.get('d52', 'home.html'))
+    m = SITE['email']
+    mail = lambda a: f'<a href="mailto:{e(a)}">{e(a)}</a>'
+    body = body.replace('{CORR}', mail(m['corrections']))
+    body = body.replace('{STAFF}', ''.join(f'<div><dt>{e(r)}</dt><dd>{e(n)}</dd></div>' for n, r in SITE['staff']))
+    body = body.replace('{CONTACT}', ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in [
+        ('Newsroom', mail(m['newsroom'])), ('Tips and documents', mail(m['tips']) + f', or Signal on <span class="nw">{e(SITE["signal"])}</span>'),
+        ('Corrections', mail(m['corrections'])), ('The Day by email', mail(m['newsletter'])),
+        ('Follow', ', '.join(f'<a href="{e(u)}" rel="noopener me">{e(n)}</a>' for n, _, u in SITE['social'])),
+        ('Publisher', f'{e(SITE["publisher"])}, {e(SITE["address"])}')]))
     page('about.html', title='Who we are · In Palestine Today', desc='Who In Palestine Today is, why its clock keeps Palestine time, how it sources every report, and how it corrects mistakes.', body=body, nav=None, css=('pages.css',), js=('pages.js',))
+
+# ---------------------------------------------------------------- privacy and terms (sample text for the outlet's lawyer to review)
+def render_legal():
+    m = SITE['email']
+    mail = lambda a: f'<a href="mailto:{e(a)}">{e(a)}</a>'
+    pages = {
+        'privacy.html': ('Privacy', 'What this site keeps about you, and what it does not.', [
+            ('What we keep', [f'If you sign up for The Day by email, we keep your email address to send it, and nothing else. You can leave at any time from the link at the foot of every email, or by writing to {mail(m["newsletter"])}.']),
+            ('What stays on your device', ['The site remembers three things in your own browser, never on our servers: the light you chose (Palestine’s light, always light or always dark), the last part of the day you read, and that you have already seen the opening animation this session. Clearing your browser’s site data removes them.']),
+            ('What we do not do', ['There are no advertising trackers, no third-party analytics and no cookies on this site. Share buttons are plain links: nothing is sent to a network until you choose to share.']),
+            ('The host', ['The site is served by its web host, which keeps standard server logs (address, time and page requested) for security, as every web host does.']),
+            ('Questions', [f'Write to {mail(m["privacy"])}. {e(SITE["publisher"])}, {e(SITE["address"])}.']),
+        ]),
+        'terms.html': ('Terms', 'How you may use what we publish.', [
+            ('Our reports', ['You may quote our reports with a link back to the report. To republish one in full, write to us first.']),
+            ('Other people’s work', ['Figures and statements belong to the sources named beside them. Photographs belong to their photographers and are used under the licence given in each caption; reuse them under that licence, not ours.']),
+            ('Corrections', [f'If you find a mistake, write to {mail(m["corrections"])}. We correct reports openly, as <a href="about.html#corrections">Who we are</a> explains.']),
+            ('Links', ['Every report links to the source it was read from. We are not responsible for what other sites publish, and a link is not an endorsement.']),
+            ('Contact', [f'{e(SITE["publisher"])}, {e(SITE["address"])} · {mail(m["newsroom"])}']),
+        ]),
+    }
+    for path, (title, intro, secs) in pages.items():
+        prose = ''.join(f'<h2>{h}</h2>' + ''.join(f'<p>{p}</p>' for p in ps) for h, ps in secs)
+        body = (f'<main id="main">\n<header class="rec-head"><div class="wrap"><h1>{title}</h1><p class="rec-intro">{intro}</p>'
+                '<p class="draft-note">Sample text for the outlet’s lawyer to review before launch.</p></div></header>\n'
+                f'<section class="ab part" data-at="12:25"><div class="wrap ab-in"><p class="ab-at"><time>12:25</time><span>Noon</span></p><div class="prose legal">{prose}</div></div></section>\n</main>\n')
+        page(path, title=f'{title} · In Palestine Today', desc=intro, body=body, nav=None, css=('pages.css',), js=('pages.js',))
+
+# ---------------------------------------------------------------- feeds and the web app manifest
+def render_feed():
+    from email.utils import format_datetime
+    ids = sorted(ITEM_URL, key=lambda x: (ITEMS[x]['date'], ITEMS[x].get('time') or ''), reverse=True)[:40]
+    def when(x):
+        it = ITEMS[x]
+        y, mo, d = (int(v) for v in it['date'].split('-'))
+        hh, mm = (int(v) for v in (it.get('time') or '12:00').split(':'))
+        return datetime.datetime(y, mo, d, hh, mm, tzinfo=datetime.timezone(datetime.timedelta(hours=3)))
+    items = []
+    for x in ids:
+        it = ITEMS[x]
+        link = BASE_URL + ITEM_URL[x]
+        card = 'assets/img/card/' + card_slug(x) + '.jpg'
+        enc = ''
+        if os.path.exists(os.path.join(ROOT, card)):
+            enc = f'<enclosure url="{BASE_URL}{card}" length="{os.path.getsize(os.path.join(ROOT, card))}" type="image/jpeg"/>'
+        items.append(f'<item><title>{e(smart(it["headline"]))}</title><link>{link}</link><guid isPermaLink="true">{link}</guid>'
+                     f'<pubDate>{format_datetime(when(x))}</pubDate><category>{e(DESK_NAME.get(it.get("region"), "The Day"))}</category>'
+                     f'<description>{e(smart(it.get("dek", "")))} Source: {e(it.get("source_name", ""))}.</description>{enc}</item>')
+    feed = ('<?xml version="1.0" encoding="utf-8"?>' + chr(10) + '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
+            '<title>In Palestine Today</title>' f'<link>{BASE_URL}home.html</link>'
+            f'<atom:link href="{BASE_URL}feed.xml" rel="self" type="application/rss+xml"/>'
+            '<description>One day in Palestine, told in order, in Palestine’s time. Every figure and every accusation sourced.</description>'
+            f'<language>en</language><lastBuildDate>{format_datetime(when(ids[0]))}</lastBuildDate>'
+            f'<image><url>{BASE_URL}assets/icons/icon-192.png</url><title>In Palestine Today</title><link>{BASE_URL}home.html</link></image>'
+            + ''.join(items) + '</channel></rss>' + chr(10))
+    write('feed.xml', feed)
+    manifest = {'name': 'In Palestine Today', 'short_name': 'In Palestine', 'start_url': 'home.html', 'scope': './', 'display': 'standalone',
+                'description': 'One day in Palestine, told in order, in Palestine’s time.', 'lang': 'en', 'theme_color': '#15182A', 'background_color': '#F5F3EE',
+                'icons': [{'src': 'assets/icons/icon-192.png', 'sizes': '192x192', 'type': 'image/png'},
+                          {'src': 'assets/icons/icon-512.png', 'sizes': '512x512', 'type': 'image/png'},
+                          {'src': 'assets/icons/icon-maskable-512.png', 'sizes': '512x512', 'type': 'image/png', 'purpose': 'maskable'}]}
+    write('site.webmanifest', json.dumps(manifest, ensure_ascii=False, indent=2) + chr(10))
 
 # ---------------------------------------------------------------- 404
 def render_404():
@@ -835,11 +1002,108 @@ render_record('stories.html', 'stories', 'Stories', 'The human side of the day: 
 render_record('harvest.html', 'harvest', 'The olive harvest', 'The 2026 harvest, attack by attack and grove by grove, as farmers, the Colonization and Wall Resistance Commission and the agencies reported it.',
               lambda it: it.get('topic') == 'olive-harvest', nav=None,
               figures=[n for n in HEADLINE_NUMBERS if ITEMS.get(n.get('item_id'), {}).get('topic') == 'olive-harvest'][:4])
+for _cfg in LIVES.values():
+    render_live(_cfg)
 render_days()
 render_visuals()
 render_search()
 render_about()
+render_legal()
 render_404()
+render_feed()
+
+# ---------------------------------------------------------------- The Day by email
+def render_email(date):
+    """The newsletter for an edition, sent at first light the next morning: tables and inline styles,
+    so it holds together in mail apps. Images and links point at the published site."""
+    plan = EDITIONS[date]
+    B = BASE_URL
+    ink, ink2, rule, ground, paper = '#15182A', '#4E5368', '#CFCADF', '#F0ECF9', '#FBFAFE'
+    serif = "Piazzolla, Georgia, 'Times New Roman', serif"
+    sans = "Archivo, 'Helvetica Neue', Arial, sans-serif"
+    y, m, d = (int(x) for x in date.split('-'))
+    nxt = datetime.date(y, m, d) + datetime.timedelta(days=1)
+    nxt_s = f'{WDL[nxt.weekday()]} {nxt.day} {MONTHS[nxt.month - 1]}'
+    L = plan['lead']
+    lit = item(L['item'])
+    lead_url = B + ITEM_URL[L['item']]
+    def a(href, text, style=''):
+        return f'<a href="{e(href)}" style="color:{ink};text-decoration:underline;{style}">{text}</a>'
+    rows = []
+    for p in plan['parts']:
+        rows.append(f'<tr><td colspan="2" style="padding:26px 0 8px;border-bottom:1px solid {rule};font:700 12px/1.3 {sans};color:{ink2};letter-spacing:.04em;text-transform:uppercase">'
+                    f'{p["from"]}–{p["to"]} · {e(p["light"])}</td></tr>'
+                    f'<tr><td colspan="2" style="padding:10px 0 4px;font:400 20px/1.25 {serif};color:{ink}">{esc_text(p["title"])}</td></tr>')
+        for s in sorted(p['slots'], key=lambda x: x['_time']):
+            it = item(s['item'])
+            rows.append(f'<tr><td valign="top" style="width:56px;padding:10px 0;font:700 13px/1.4 {sans};color:{ink2}">{s["_time"]}</td>'
+                        f'<td style="padding:10px 0;border-bottom:1px solid {rule}"><a href="{B}{ITEM_URL[s["item"]]}" style="font:600 16px/1.35 {serif};color:{ink};text-decoration:none">{esc_text(s.get("headline") or it["headline"])}</a>'
+                        f'<br><span style="font:500 12px/1.5 {sans};color:{ink2}">{e(KIND.get(it.get("kind"), "Update"))} · {e(it.get("source_name", ""))}</span></td></tr>')
+    figs = ''.join(f'<tr><td valign="top" style="width:96px;padding:10px 12px 10px 0;font:600 22px/1.1 {serif};color:{ink};border-bottom:1px solid {rule}">{e(n["value"])}</td>'
+                   f'<td style="padding:10px 0;border-bottom:1px solid {rule};font:500 14px/1.45 {sans};color:{ink}">{esc_text(n["label"])}<br><span style="font-size:12px;color:{ink2}">{e(n.get("source_name", ""))}</span></td></tr>'
+                   for n in HEADLINE_NUMBERS[:3])
+    ahead = ''.join(f'<tr><td valign="top" style="width:96px;padding:10px 12px 10px 0;font:700 13px/1.4 {sans};color:{ink2};border-bottom:1px solid {rule}">{WD[datetime.date(*map(int, x["date"].split("-"))).weekday()]} {int(x["date"][8:])} {SHORTM[int(x["date"][5:7]) - 1]}</td>'
+                    f'<td style="padding:10px 0;border-bottom:1px solid {rule};font:500 14px/1.45 {sans};color:{ink}">{esc_text(x["label"])}</td></tr>' for x in AHEAD[:3])
+    live = LIVES.get(date)
+    live_html = (f'<tr><td style="padding:22px 0 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:2px solid {ink}"><tr><td style="padding:12px 0;font:500 14px/1.5 {sans};color:{ink2}">'
+                 f'<b style="color:{ink}">Live coverage</b> · {len(live["items"])} updates through the day<br>'
+                 f'<a href="{B}{live_path(live)}" style="font:600 18px/1.3 {serif};color:{ink};text-decoration:none">{esc_text(live["title"])}</a></td></tr></table></td></tr>') if live else ''
+    def section(title, inner):
+        return (f'<tr><td style="padding:30px 0 0"><p style="margin:0 0 4px;padding-top:10px;border-top:2px solid {ink};font:700 12px/1.3 {sans};letter-spacing:.06em;text-transform:uppercase;color:{ink2}">{title}</p>'
+                f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0">{inner}</table></td></tr>')
+    html_ = f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>The Day · {long_date(date)} · In Palestine Today</title>
+<style>
+  @font-face {{ font-family: "Piazzolla"; src: url("{B}assets/fonts/piazzolla-var.woff2") format("woff2"); font-weight: 100 900; }}
+  @font-face {{ font-family: "Archivo"; src: url("{B}assets/fonts/archivo-var.woff2") format("woff2"); font-weight: 100 900; }}
+  a:hover {{ text-decoration: underline !important; }}
+  @media (max-width: 620px) {{ .px {{ padding-left: 18px !important; padding-right: 18px !important; }} .hl {{ font-size: 26px !important; }} }}
+</style>
+</head>
+<body style="margin:0;padding:0;background:{ground}">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0">{esc_text(L.get("headline") or lit["headline"])}. Yesterday in Palestine, in the order it happened.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{ground}"><tr><td align="center" style="padding:28px 12px">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:{paper}">
+<tr><td class="px" style="padding:30px 40px 0">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+    <td><a href="{B}home.html"><img src="{B}email/img/wordmark-shadow.png" width="250" height="43" alt="In Palestine Today" style="display:block;border:0;width:250px;height:auto"></a></td>
+    <td align="right" style="font:600 12px/1.4 {sans};color:{ink2}">{nxt_s}<br>at first light</td>
+  </tr></table>
+</td></tr>
+<tr><td class="px" style="padding:26px 40px 0">
+  <p style="margin:0;font:400 18px/1.5 {serif};color:{ink}">It is first light in Palestine. Here is {long_date(date, year=False)}, the way it happened, from the night to the last report before midnight.</p>
+</td></tr>
+<tr><td style="padding:22px 0 0"><img src="{B}email/img/sky-{date}.png" width="600" height="21" alt="The sky over Palestine on {long_date(date, year=False)}, with each report placed at its minute" style="display:block;border:0;width:100%;height:auto"></td></tr>
+<tr><td class="px" style="padding:26px 40px 0">
+  <a href="{lead_url}"><img src="{B}email/img/lead-{date}.jpg" width="520" height="300" alt="{e(PH[L["photo"]].get("alt", ""))}" style="display:block;border:0;width:100%;height:auto"></a>
+  <p style="margin:8px 0 0;font:500 11px/1.5 {sans};color:{ink2}">{esc_text(PH[L["photo"]].get("caption", ""))} Photo: {e(PH[L["photo"]].get("author", ""))} via Wikimedia Commons, {e(PH[L["photo"]].get("license", ""))}.</p>
+  <h1 class="hl" style="margin:18px 0 10px;font:600 30px/1.12 {serif};color:{ink}"><a href="{lead_url}" style="color:{ink};text-decoration:none">{esc_text(L.get("headline") or lit["headline"])}</a></h1>
+  <p style="margin:0 0 12px;font:400 17px/1.55 {serif};color:{ink}">{esc_text(L.get("dek") or lit.get("dek", ""))}</p>
+  <p style="margin:0;font:600 14px/1.4 {sans}">{a(lead_url, "Read the report")} &nbsp;·&nbsp; {a(B + edition_path(date), "The whole day")}</p>
+</td></tr>
+<tr><td class="px" style="padding:0 40px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+{live_html}
+{section('The day, in order', ''.join(rows))}
+{section('The figures', figs)}
+{section('Ahead', ahead)}
+</table></td></tr>
+<tr><td class="px" style="padding:34px 40px 36px">
+  <p style="margin:0 0 10px;padding-top:14px;border-top:1px solid {rule};font:500 12px/1.6 {sans};color:{ink2}">Every report links to the source it was read from, and each figure names who counted it. Times are Palestine time.</p>
+  <p style="margin:0;font:500 12px/1.6 {sans};color:{ink2}">You are getting The Day because you signed up at inpalestine.today. {a(B + "home.html#signup", "Update your preferences", "color:" + ink2)} · {a(B + "email/the-day-" + date + ".html", "View in your browser", "color:" + ink2)} · {a("mailto:newsletter@inpalestine.today?subject=Unsubscribe", "Unsubscribe", "color:" + ink2)}<br>In Palestine Today · PO Box 0000 · Ramallah, Palestine</p>
+</td></tr>
+</table>
+</td></tr></table>
+</body>
+</html>
+'''
+    write(f'email/the-day-{date}.html', html_)
+
+render_email(LATEST)
 
 # what tools/cards.mjs draws: one 1200 × 630 share card per report
 os.makedirs(os.path.join(ROOT, 'tools', 'out'), exist_ok=True)

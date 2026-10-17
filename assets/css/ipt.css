@@ -2,9 +2,9 @@
    The page keeps Palestine's clock and Palestine's light. Tokens below are the midday fallback;
    assets/js/sun.js rewrites them from the sun's real altitude over Jerusalem. */
 
-@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-var.woff2?v=6") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
-@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-italic-var.woff2?v=6") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
-@font-face { font-family: "Archivo"; src: url("../fonts/archivo-var.woff2?v=6") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-var.woff2?v=7") format("woff2"); font-weight: 300 750; font-style: normal; font-display: swap; }
+@font-face { font-family: "Piazzolla"; src: url("../fonts/piazzolla-italic-var.woff2?v=8") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("../fonts/archivo-var.woff2?v=7") format("woff2"); font-weight: 400 800; font-stretch: 62% 100%; font-display: swap; }
 
 :root {
   /* light (midday fallback — JS replaces these) */
@@ -202,6 +202,17 @@ figcaption b { color: var(--ink); font-weight: 600; }
 .more-lead .filed { margin-top: 6px; }
 .more-lead h3 { margin: 0; font: 600 1.125rem/1.3 var(--serif); font-variation-settings: "opsz" 20; text-wrap: balance; }
 
+/* ---------- live: the band that opens an edition with live coverage ---------- */
+.liveband { border-bottom: 1px solid var(--rule); }
+.liveband a { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 14px 0; text-decoration: none; }
+.liveband .lb-h { font: 620 1.125rem/1.3 var(--serif); font-variation-settings: "opsz" 20; text-wrap: balance; }
+.liveband a:hover .lb-h { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .15em; }
+.liveband .lb-t { font: 500 .8125rem var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lv-state { display: inline-flex; align-items: center; gap: 8px; margin: 0; font: 650 1rem/1.2 var(--serif); font-variant-caps: all-small-caps; letter-spacing: .08em; }
+/* live is "now", so it carries the sun; once the day is over it is an empty ring */
+.lv-dot { flex: none; width: 11px; height: 11px; border-radius: 50%; background: var(--sun); }
+.lv-state.is-ended .lv-dot { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
+
 /* ---------- the Day Dial ---------- */
 .dial { position: relative; margin: 0 0 6px; }
 .dial-band { position: relative; height: 136px; }
@@ -229,6 +240,8 @@ figcaption b { color: var(--ink); font-weight: 600; }
 [data-at] { background-color: var(--ground); color: var(--ink); }
 .part { position: relative; background: var(--ground); color: var(--ink); transition: background-color var(--t-light) var(--ease-sun), color var(--t-light) var(--ease-sun); }
 .part + .part { border-top: 1px solid var(--rule-2); }
+/* the day's later parts are drawn when the reader nears them: a long edition lays out in a fraction of the time on a phone */
+.part[data-span] { content-visibility: auto; contain-intrinsic-size: auto 1400px; }
 .part-head { display: grid; grid-template-columns: var(--col-time) minmax(0, 1fr) var(--col-margin); gap: 10px 48px; align-items: end; padding: 64px 0 22px; }
 .part-head .span { font: 600 .8125rem/1.35 var(--sans); font-variant-numeric: tabular-nums; color: var(--ink-2); }
 .part-head .span b { display: block; color: var(--ink); font-size: .9375rem; }
@@ -430,6 +443,8 @@ figcaption b { color: var(--ink); font-weight: 600; }
   .field, .field input { width: 100%; }
   .signup form { flex-direction: column; align-items: stretch; }
   .foot .wrap { grid-template-columns: 1fr 1fr; }
+  .foot .wrap > :nth-child(4) { grid-column: 1 / -1; }
+  .foot .wrap > :nth-child(4) ul { columns: 2; column-gap: 48px; }
   .rbar .wrap { grid-template-columns: auto minmax(0, 1fr); gap: 14px; min-height: 54px; }
   .rbar .track { display: none; }
   .rbar .wm { font-size: 1.2rem; }
@@ -440,6 +455,7 @@ figcaption b { color: var(--ink); font-weight: 600; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
 }
 @media print {
+  .part[data-span] { content-visibility: visible; }
   .instr, .rbar, .loader, .lightsw, .signup, .dial-band, .dial-leaders { display: none !important; }
   .part { background: #fff !important; color: #000 !important; }
   body { background: #fff; color: #000; font-size: 11pt; }

@@ -31,6 +31,8 @@ try {
   await send('Emulation.setDeviceMetricsOverride', { width: +w, height: +h, deviceScaleFactor: 1, mobile: +w < 768 });
   await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: scheme }] });
   await send('Page.addScriptToEvaluateOnNewDocument', { source: "try{sessionStorage.setItem('ipt-loader','1')}catch(e){}" });
+  // a full-page capture draws every part at once (on screen they are drawn as the reader nears them)
+  if (mode === 'full') await send('Page.addScriptToEvaluateOnNewDocument', { source: "document.addEventListener('DOMContentLoaded',function(){var s=document.createElement('style');s.textContent='.part[data-span]{content-visibility:visible!important}';document.head.appendChild(s)})" });
   await send('Page.navigate', { url });
   await sleep(2200);
   await send('Runtime.evaluate', { expression: 'document.fonts.ready.then(()=>1)', awaitPromise: true });

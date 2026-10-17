@@ -1,0 +1,37 @@
+{
+  "_note": "Sample details for the prototype. Every value here is a stand-in: replace each with the outlet's real one before launch, then run tools/build.py.",
+  "publisher": "In Palestine Today Media",
+  "address": "PO Box 0000, Ramallah, Palestine",
+  "email": {
+    "newsroom": "newsroom@inpalestine.today",
+    "corrections": "corrections@inpalestine.today",
+    "tips": "tips@inpalestine.today",
+    "newsletter": "newsletter@inpalestine.today",
+    "privacy": "privacy@inpalestine.today"
+  },
+  "signal": "+970 59 000 0000",
+  "social": [
+    ["X", "@inpalestinetoday", "https://x.com/inpalestinetoday"],
+    ["Instagram", "@inpalestinetoday", "https://www.instagram.com/inpalestinetoday"],
+    ["Facebook", "In Palestine Today", "https://www.facebook.com/inpalestinetoday"],
+    ["Telegram", "@inpalestinetoday", "https://t.me/inpalestinetoday"],
+    ["YouTube", "@inpalestinetoday", "https://www.youtube.com/@inpalestinetoday"]
+  ],
+  "staff": [
+    ["Rania Haddad", "Editor-in-chief"],
+    ["Omar Saleh", "Managing editor"],
+    ["Hala Abu Sitta", "Gaza desk"],
+    ["Yousef Khalil", "West Bank desk"],
+    ["Dina Nasser", "Jerusalem desk"],
+    ["Kareem Odeh", "Prisoners and the courts"],
+    ["Leila Mansour", "World desk"],
+    ["Samir Daher", "Photographs and visuals"]
+  ],
+  "desk_editor": {
+    "gaza": ["Hala Abu Sitta", "Gaza desk"],
+    "west-bank": ["Yousef Khalil", "West Bank desk"],
+    "jerusalem": ["Dina Nasser", "Jerusalem desk"],
+    "prisoners": ["Kareem Odeh", "Prisoners and the courts"],
+    "world": ["Leila Mansour", "World desk"]
+  }
+}

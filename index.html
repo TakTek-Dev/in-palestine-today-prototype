@@ -13,12 +13,15 @@
 <meta property="og:image" content="https://taktek-dev.github.io/in-palestine-today-prototype/assets/og.jpg">
 <meta property="og:url" content="https://taktek-dev.github.io/in-palestine-today-prototype/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg?v=8" type="image/svg+xml" data-live>
-<link rel="preload" href="assets/fonts/piazzolla-var.woff2?v=6" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/archivo-var.woff2?v=6" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/ipt.css?v=8">
-<link rel="stylesheet" href="assets/css/book.css?v=8">
-<script src="assets/js/sun.js?v=8"></script>
+<link rel="icon" href="favicon.svg?v=10" type="image/svg+xml" data-live>
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="assets/fonts/piazzolla-var.woff2?v=7" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/archivo-var.woff2?v=7" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/ipt.css?v=10">
+<link rel="stylesheet" href="assets/css/book.css?v=10">
+<script src="assets/js/sun.js?v=10"></script>
 </head>
 <body>
 <!--
@@ -141,7 +144,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
       <h3 class="sub">Space and size</h3>
       <p class="lede">Keep clear space of two sun diameters (0.41 em) on every side. The wordmark stays at least 120 px or 30 mm wide, where the stop is still a round disc a little over 3 px across. Below that, use the monogram, which holds down to 16 px.</p>
-      <div class="sizes">
+      <div class="sizes" tabindex="0" role="region" aria-label="The wordmark and the monogram at their working sizes">
         <div><span class="wm" role="img" aria-label="Wordmark at 48 px" style="font-size:48px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">48 px · masthead</span></div>
         <div><span class="wm" role="img" aria-label="Wordmark at 24 px" style="font-size:24px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">24 px · reading bar</span></div>
         <div><span class="wm" role="img" aria-label="Wordmark at 16.5 px, the minimum" style="font-size:16.5px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">120 px wide · minimum</span></div>
@@ -427,7 +430,16 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <li><span class="thumb"><b style="font-size:1.1rem">Aa</b></span><span><b>Piazzolla · Archivo</b><span>Variable WOFF2, Open Font License; licence texts included</span></span><span class="dl2"><a class="dl" href="assets/fonts/OFL-Piazzolla.txt">Piazzolla licence</a><a class="dl" href="assets/fonts/OFL-Archivo.txt">Archivo licence</a></span></li>
         <li><span class="thumb"><b class="sans" style="font-size:.8rem">sun.js</b></span><span><b>The sun, as code</b><span>Palestine clock, solar position, the day’s events, moon phase, light model</span></span><a class="dl" href="assets/js/sun.js">View</a></li>
       </ul>
-      <p class="note-s" style="margin-top:22px">Placeholders the client still has to provide: social handles, newsletter service, staff bylines, legal imprint and contact details.</p>
+      <h3 class="sub">The social kit, app icons and the newsletter</h3>
+      <ul class="files">
+        <li><span class="thumb"><img src="assets/kit/avatar-shadow-800.png" alt=""></span><span><b>Profile pictures</b><span>PNG, 800 × 800, in shadow, night and stone</span></span><span class="dl2"><a class="dl" href="assets/kit/avatar-shadow-800.png" download>Shadow</a><a class="dl" href="assets/kit/avatar-night-800.png" download>Night</a><a class="dl" href="assets/kit/avatar-stone-800.png" download>Stone</a></span></li>
+        <li><span class="thumb" style="background:#9ED0EE"><img src="assets/kit/x-header-1500x500.png" alt=""></span><span><b>Covers</b><span>PNG: the day’s sky with the sun’s path, the wordmark in the noon light</span></span><span class="dl2"><a class="dl" href="assets/kit/x-header-1500x500.png" download>X</a><a class="dl" href="assets/kit/facebook-cover-1640x624.png" download>Facebook</a><a class="dl" href="assets/kit/youtube-banner-2560x1440.png" download>YouTube</a><a class="dl" href="assets/kit/linkedin-cover-1128x191.png" download>LinkedIn</a></span></li>
+        <li><span class="thumb"><img src="assets/kit/instagram-post-1080x1350.png" alt=""></span><span><b>Instagram templates</b><span>PNG: a report in the light of its minute, as a post (1080 × 1350) and a story (1080 × 1920)</span></span><span class="dl2"><a class="dl" href="assets/kit/instagram-post-1080x1350.png" download>Post</a><a class="dl" href="assets/kit/instagram-story-1080x1920.png" download>Story</a></span></li>
+        <li><span class="thumb"><img src="assets/icons/icon-192.png" alt=""></span><span><b>App and browser icons</b><span>PNG: home-screen icon, maskable icon and a 32 px favicon, with the web app manifest</span></span><span class="dl2"><a class="dl" href="assets/icons/apple-touch-icon.png" download>180 px</a><a class="dl" href="assets/icons/icon-512.png" download>512 px</a><a class="dl" href="assets/icons/icon-maskable-512.png" download>Maskable</a><a class="dl" href="site.webmanifest">Manifest</a></span></li>
+        <li><span class="thumb" style="background:#F0ECF9"><b class="sans" style="font-size:.8rem">@</b></span><span><b>The Day by email</b><span>The newsletter for 14 October, sent at first light the next morning</span></span><a class="dl" href="email/the-day-2026-10-14.html">View</a></li>
+        <li><span class="thumb"><b class="sans" style="font-size:.8rem">RSS</b></span><span><b>The feed</b><span>RSS 2.0, the latest 40 reports, each with its share card</span></span><a class="dl" href="feed.xml">View</a></li>
+      </ul>
+      <p class="note-s" style="margin-top:22px">Sample details to replace before launch, all in one file (tools/site.json): staff names and desks, social accounts, contact addresses, the publisher’s address and the newsletter service.</p>
     </div>
   </div>
 </section>
@@ -444,9 +456,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   </div>
 </footer>
 
-<script src="assets/js/marks.js?v=8"></script>
-<script src="assets/js/ipt.js?v=9"></script>
-<script src="assets/js/edition.js?v=8"></script>
-<script src="assets/js/book.js?v=8"></script>
+<script src="assets/js/marks.js?v=10"></script>
+<script src="assets/js/ipt.js?v=10"></script>
+<script src="assets/js/edition.js?v=10"></script>
+<script src="assets/js/book.js?v=10"></script>
 </body>
 </html>

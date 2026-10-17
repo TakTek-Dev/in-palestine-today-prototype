@@ -181,7 +181,7 @@ h3.sub + p.lede { margin-top: -6px; color: var(--ink-2); max-width: 62ch; font-s
 .files .thumb img { max-height: 30px; width: auto; }
 .files b { font: 620 1.02rem var(--serif); display: block; }
 .files span { font: 450 .8125rem var(--sans); color: var(--ink-2); }
-.files a.dl { font: 650 .8125rem var(--sans); }
+.files a.dl { display: inline-flex; align-items: center; min-height: 28px; font: 650 .8125rem var(--sans); }
 .files.tpls li { grid-template-columns: minmax(0, 1fr); }
 .files.tpls b a { text-decoration: none; }
 .files.tpls b a:hover { text-decoration: underline; }
@@ -231,3 +231,4 @@ h3.sub + p.lede { margin-top: -6px; color: var(--ink-2); max-width: 62ch; font-s
   .apps { grid-template-columns: 1fr; }
   .anatomy svg.ann text { font-size: 10px; }
 }
+.sizes:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }

@@ -63,6 +63,22 @@
     document.addEventListener('click', function (e) { if (!pop.hidden && !pop.contains(e.target) && !open.contains(e.target)) show(false); });
   });
 
+  /* ---------- live coverage: newest first, or in the order of the day ---------- */
+  var lvList = $('[data-lv-list]');
+  if (lvList) {
+    var lvBtns = $$('[data-lv-order]'), lvCount = $('[data-lv-count]');
+    var orderLive = function (k) {
+      $$('.lv', lvList).sort(function (a, b) {
+        var d = toMin(a.getAttribute('data-time')) - toMin(b.getAttribute('data-time'));
+        return k === 'day' ? d : -d;
+      }).forEach(function (li) { lvList.appendChild(li); });
+      lvBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lv-order') === k)); });
+      if (lvCount) lvCount.textContent = (k === 'day' ? 'In the order of the day' : 'Newest first') + '. Each update is printed in the light of its minute.';
+    };
+    lvBtns.forEach(function (b) { b.addEventListener('click', function () { orderLive(b.getAttribute('data-lv-order')); }); });
+    if (new URLSearchParams(location.search).get('order') === 'day') orderLive('day');
+  }
+
   /* ---------- October in Palestine's sky ---------- */
   var cal = $('[data-skycal]');
   if (cal) {

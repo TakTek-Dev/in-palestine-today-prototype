@@ -108,7 +108,9 @@
     root.classList.toggle('is-preview', !!n.preview);
     var at = S.instant(n.y, n.m, n.d, n.minutes);
     $$('.wm').forEach(function (el) { if (!el.closest('[data-mark-fixed]')) setMark(el, L.alt, at); });
-    paintParts();
+    // a part's light depends on its own hour and the reader's mode, not on the time now: repaint them only when the mode changes
+    // (fonts arriving, the page loading and resizes re-measure them separately)
+    if (partsMode !== state.mode) paintParts();
     writeInstrument(n, L);
     drawDialNow(n, L);
     favicon(L.alt);
@@ -117,31 +119,39 @@
 
   // each part of the edition's day in the light of its own hour, blended slot by slot:
   // the ground at a slot's top is the light of the minute it was filed, so scrolling walks through the day
+  // Writes, then reads, then writes: every part's light first, all the geometry in one layout, then the gradients.
+  // (Reading a position between two writes makes the browser lay the whole page out again, once per part.)
+  var partsMode = null;
   function paintParts() {
+    partsMode = state.mode;
+    var spans = [];
     $$('[data-at]').forEach(function (el) {
       var dd = dateOf(el);
       if (!dd) return;
-      var t = toMin(el.getAttribute('data-at'));
-      var L = lightFor(dd[0], dd[1], dd[2], t);
+      var L = lightFor(dd[0], dd[1], dd[2], toMin(el.getAttribute('data-at')));
       S.applyTokens(el, L.tokens);
       el.classList.toggle('is-dark', L.dark);
       el.setAttribute('data-light', L.key);
       el._light = L;
-      if (!el.hasAttribute('data-span')) return;
-      var span = el.getAttribute('data-span').split('-'), from = toMin(span[0]), to = Math.min(1439, toMin(span[1]));
-      var mode = L.dark ? 'dark' : 'day';                 // one part never crosses the horizon mid-text
-      var H = el.offsetHeight || 1, stops = [];
-      function col(min) { return S.ok(lightFor(dd[0], dd[1], dd[2], min, mode).ground); }
-      stops.push(col(from) + ' 0px');
-      var top = el.getBoundingClientRect().top;
-      $$('.slot[data-time], .rows > .row[data-time]', el).forEach(function (s) {
-        var st = toMin(s.getAttribute('data-time'));
-        var y = s.getBoundingClientRect().top - top;
-        stops.push(col(st) + ' ' + Math.max(0, y) + 'px');
-        s._light = lightFor(dd[0], dd[1], dd[2], st, mode);
+      if (el.hasAttribute('data-span')) spans.push({ el: el, dd: dd, mode: L.dark ? 'dark' : 'day' });   // one part never crosses the horizon mid-text
+    });
+    spans.forEach(function (p) {
+      // parts below the screen skip rendering (content-visibility) and report a placeholder height;
+      // their content still measures true, so the height is taken from the content
+      var top = p.el.getBoundingClientRect().top;
+      p.H = Math.max(1, Math.round((p.el.lastElementChild || p.el).getBoundingClientRect().bottom - top));
+      p.slots = $$('.slot[data-time], .rows > .row[data-time]', p.el).map(function (s) { return { s: s, t: toMin(s.getAttribute('data-time')), y: s.getBoundingClientRect().top - top }; });
+    });
+    spans.forEach(function (p) {
+      var dd = p.dd, span = p.el.getAttribute('data-span').split('-'), from = toMin(span[0]), to = Math.min(1439, toMin(span[1]));
+      function col(min) { return S.ok(lightFor(dd[0], dd[1], dd[2], min, p.mode).ground); }
+      var stops = [col(from) + ' 0px'];
+      p.slots.forEach(function (x) {
+        stops.push(col(x.t) + ' ' + Math.max(0, x.y) + 'px');
+        x.s._light = lightFor(dd[0], dd[1], dd[2], x.t, p.mode);
       });
-      stops.push(col(to) + ' ' + H + 'px');
-      el.style.backgroundImage = 'linear-gradient(180deg,' + stops.join(',') + ')';
+      stops.push(col(to) + ' ' + p.H + 'px');
+      p.el.style.backgroundImage = 'linear-gradient(180deg,' + stops.join(',') + ')';
     });
   }
 
@@ -599,7 +609,7 @@
         e.preventDefault();
         var inp = $('input[type="email"]', f), msg = $('.msg', f);
         if (!inp.value || !inp.checkValidity()) { msg.textContent = 'That address looks incomplete. Check it and try again.'; inp.focus(); return; }
-        msg.textContent = 'Thanks. This prototype doesn’t send email yet, so nothing was stored.';
+        msg.textContent = 'You’re on the list. The Day reaches you at first light, Palestine time.';
       });
     });
   }
