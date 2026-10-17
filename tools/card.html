@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-edition="2026-10-14">
+<head>
+<meta charset="utf-8">
+<title>card</title>
+<!-- The share card of one report, 1200 × 630, drawn by tools/cards.mjs: the report in the light of the minute it was filed. -->
+<link rel="stylesheet" href="../assets/css/ipt.css">
+<script src="../assets/js/sun.js"></script>
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  *, *::before, *::after { transition: none !important; }
+  .card { position: relative; width: 1200px; height: 630px; display: grid; grid-template-columns: minmax(0, 1fr) 0; background: var(--ground); color: var(--ink); }
+  .card.has-ph { grid-template-columns: minmax(0, 1fr) 452px; }
+  .txt { display: grid; grid-template-rows: auto 1fr auto; padding: 52px 60px 46px 64px; min-width: 0; }
+  .when { display: flex; align-items: center; gap: 22px; margin: 0; }
+  .when .t { font: 300 84px/.9 var(--serif); font-variation-settings: "opsz" 30; font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.03em; }
+  .when .st svg { width: 44px; height: 28px; display: block; }
+  .when .d { font: 600 21px/1.35 var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .when .d b { color: var(--ink); font-weight: 650; }
+  h1 { align-self: center; margin: 0; font: 620 58px/1.06 var(--serif); font-variation-settings: "opsz" 30; letter-spacing: -.02em; text-wrap: balance; }
+  .foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+  .foot .wm { font-size: 44px; }
+  .foot .by { margin: 0 0 6px; font: 600 18px/1.35 var(--sans); color: var(--ink-2); text-align: right; max-width: 420px; }
+  .ph { margin: 0; position: relative; overflow: hidden; background: var(--sink); }
+  .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .sky { position: absolute; left: 0; right: 0; bottom: 0; height: 16px; }
+  .sky i { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid rgba(21, 24, 42, .9); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="txt">
+    <p class="when"><span class="t"></span><span class="st"></span><span class="d"></span></p>
+    <h1></h1>
+    <div class="foot"><span class="wm" data-mark-fixed><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><p class="by"></p></div>
+  </div>
+  <figure class="ph"><img alt=""></figure>
+  <div class="sky"><i></i></div>
+</div>
+<script src="../assets/js/ipt.js"></script>
+<script>
+  window.draw = function (c) {
+    var S = window.IPTSun, I = window.IPT;
+    var d = c.date.split('-').map(Number), p = c.time.split(':'), min = +p[0] * 60 + +p[1];
+    var L = S.light(d[0], d[1], d[2], min, 'follow');
+    var card = document.querySelector('.card');
+    S.applyTokens(card, L.tokens);
+    var alt = S.position(S.instant(d[0], d[1], d[2], min)).alt;
+    document.querySelector('.t').textContent = c.time;
+    document.querySelector('.st').innerHTML = I.stamp(alt);
+    var a = Math.round(alt);
+    document.querySelector('.d').innerHTML = '<b>' + S.DAYS[S.weekday(d[0], d[1], d[2])] + ' ' + d[2] + ' ' + S.MONTHS[d[1] - 1] + ' ' + d[0] + '</b><br>Palestine time · ' + (a < -6 ? 'night' : 'sun ' + (a < 0 ? '−' + (-a) : a) + '°');
+    var h = document.querySelector('h1');
+    h.textContent = c.headline;
+    document.querySelector('.by').textContent = [c.kind, c.place, c.source].filter(Boolean).join(' · ');
+    I.setMark(document.querySelector('.wm'), alt, S.instant(d[0], d[1], d[2], min));
+    var s = [];
+    for (var m = 0; m <= 1440; m += 15) { var q = S.position(S.instant(d[0], d[1], d[2], m)); s.push(S.ok(S.sky(q.alt, q.rising)) + ' ' + (m / 14.4).toFixed(2) + '%'); }
+    document.querySelector('.sky').style.background = 'linear-gradient(90deg,' + s.join(',') + ')';
+    var bead = document.querySelector('.sky i');
+    bead.style.left = (min / 14.4) + '%';
+    bead.style.background = alt > -6 ? S.ok(S.sunColour(alt)) : '#E9E8F0';
+    card.classList.toggle('has-ph', !!c.photo);
+    var img = document.querySelector('.ph img');
+    // the headline is set as large as four lines allow
+    var size = c.photo ? 58 : 72;
+    h.style.fontSize = size + 'px';
+    while (size > 34 && h.getBoundingClientRect().height > size * 1.06 * (c.photo ? 4 : 3) + 2) { size -= 2; h.style.fontSize = size + 'px'; }
+    return new Promise(function (res) {
+      if (!c.photo) { img.removeAttribute('src'); return document.fonts.ready.then(function () { res(size); }); }
+      img.onload = img.onerror = function () { document.fonts.ready.then(function () { res(size); }); };
+      img.src = c.photo;
+    });
+  };
+</script>
+</body>
+</html>

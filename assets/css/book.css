@@ -29,11 +29,13 @@
 .scrubber .read b { display: block; color: var(--ink); font-size: 1.6rem; font-weight: 650; letter-spacing: -.01em; }
 .scrubber .ticks { position: relative; height: 18px; font: 600 10.5px var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .scrubber .ticks span { position: absolute; transform: translateX(-50%); top: 2px; white-space: nowrap; }
+.scrubber .ticks span:first-child { transform: none; }
+.scrubber .ticks span:last-child { transform: translateX(-100%); }
 .scrubber .actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 
 /* chapters */
-.ch { padding: 0 0 96px; }
-.ch-head { display: grid; grid-template-columns: var(--col-time) minmax(0, 1fr); gap: 10px 48px; padding: 88px 0 40px; align-items: end; }
+.ch { padding: 0 0 80px; }
+.ch-head { display: grid; grid-template-columns: var(--col-time) minmax(0, 1fr); gap: 10px 48px; padding: 76px 0 36px; align-items: end; }
 .ch-head .at { font: 300 3.2rem/.9 var(--serif); font-variation-settings: "opsz" 30; font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.03em; }
 .ch-head .at small { display: block; margin-top: 10px; font: 600 .78rem var(--sans); color: var(--ink-2); letter-spacing: 0; }
 .ch-head h2 { margin: 0; font: 600 clamp(2.2rem, 1.4rem + 2.6vw, 3.9rem)/1.02 var(--serif); font-variation-settings: "opsz" 30; letter-spacing: -.022em; text-wrap: balance; max-width: 18ch; }
@@ -51,7 +53,7 @@ h3.sub + p.lede { margin-top: -6px; color: var(--ink-2); max-width: 62ch; font-s
 
 /* anatomy */
 .anatomy { position: relative; padding: 70px 0 90px; }
-.anatomy .wm { font-size: clamp(2.6rem, 8.6vw, 8.8rem); letter-spacing: -.024em; }
+.anatomy .wm { font-size: min(clamp(2.6rem, 8.6vw, 8.8rem), 11vw); letter-spacing: -.024em; }
 .anatomy svg.ann { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .anatomy svg.ann line, .anatomy svg.ann path { stroke: var(--ink-2); stroke-width: 1; fill: none; }
 .anatomy svg.ann .dash { stroke-dasharray: 3 4; }
@@ -93,6 +95,8 @@ h3.sub + p.lede { margin-top: -6px; color: var(--ink-2); max-width: 62ch; font-s
 .ramp { height: 56px; position: relative; border: 1px solid var(--rule-2); }
 .ramp-ticks { position: relative; height: 22px; font: 600 10.5px var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .ramp-ticks span { position: absolute; top: 5px; transform: translateX(-50%); white-space: nowrap; }
+.ramp-ticks span:first-child { transform: none; }
+.ramp-ticks span:last-child { transform: translateX(-100%); }
 .consts { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
 .consts div { font: 500 .78rem/1.4 var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; min-width: 0; }
 .consts .chip { display: block; height: 112px; margin-bottom: 10px; box-shadow: inset 0 0 0 1px var(--rule-2); }
@@ -178,6 +182,9 @@ h3.sub + p.lede { margin-top: -6px; color: var(--ink-2); max-width: 62ch; font-s
 .files b { font: 620 1.02rem var(--serif); display: block; }
 .files span { font: 450 .8125rem var(--sans); color: var(--ink-2); }
 .files a.dl { font: 650 .8125rem var(--sans); }
+.files.tpls li { grid-template-columns: minmax(0, 1fr); }
+.files.tpls b a { text-decoration: none; }
+.files.tpls b a:hover { text-decoration: underline; }
 .files .dl2 { display: grid; gap: 4px; justify-items: end; }
 
 @media (max-width: 1180px) {
@@ -195,7 +202,15 @@ h3.sub + p.lede { margin-top: -6px; color: var(--ink-2); max-width: 62ch; font-s
   .bk-nav .wm { font-size: 1.15rem; }
   .ch-head, .ch-body { grid-template-columns: 1fr; }
   .ch-body > * { grid-column: 1; }
-  .ch-head { padding-top: 64px; }
+  .ch { padding-bottom: 56px; }
+  .ch-head { padding: 48px 0 26px; }
+  .cover { min-height: 0; }
+  .cover-main { padding-top: 52px; padding-bottom: 40px; }
+  .scrubber { margin-top: 0; }
+  .cover .wm.giant { font-size: 11.4vw; }
+  .cover-main { grid-template-columns: minmax(0, 1fr); }
+  .sizes { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+  .sizes > * { flex: none; }
   .ch-head .at { font-size: 2.2rem; }
   .scrubber .row { grid-template-columns: 1fr; }
   .scrubber .read { gap: 18px; }

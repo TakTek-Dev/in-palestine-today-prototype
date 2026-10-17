@@ -1,0 +1,63 @@
+{
+  "lead": {
+    "item": "c09",
+    "photo": "ph31",
+    "headline": "Israeli forces surround Ramallah's main hospital and raid rights groups' offices",
+    "dek": "A teenager and a man were shot with live fire, one of them seriously, and two journalists were injured during the hours-long raid, the Health Ministry and local sources said.",
+    "more": ["c25", "c24"]
+  },
+  "parts": [
+    {
+      "key": "night", "at": "03:00", "from": "00:00", "to": "06:41", "light": "Night and dawn",
+      "title": "An editorial on the camps, before dawn",
+      "slots": [
+        { "item": "c01", "label": "The camps", "layout": "two", "photo": "ph28", "paras": 2 }
+      ]
+    },
+    {
+      "key": "morning", "at": "08:30", "from": "06:41", "to": "10:45", "light": "Morning",
+      "title": "A family beaten at night, a hospital surrounded by day",
+      "slots": [
+        { "item": "c03", "label": "Arrests in Nablus", "briefs": ["c08"], "briefs_title": "Also this morning" },
+        { "item": "c04", "label": "A family in Talfit", "layout": "quote", "paras": 2 },
+        { "item": "c06", "label": "The harvest", "photo": "ph05", "paras": 2, "briefs": ["c07", "c11", "c12", "c22"], "briefs_title": "In the groves, through the day" },
+        { "item": "c09", "label": "Ramallah hospital", "layout": "big", "paras": 3, "state": "updated" }
+      ]
+    },
+    {
+      "key": "midday", "at": "12:25", "from": "10:45", "to": "14:05", "light": "Midday",
+      "title": "Jerusalem's homes, Gaza's count",
+      "slots": [
+        { "item": "c10", "label": "Masafer Yatta", "layout": "two", "photo": "ph08", "paras": 2, "briefs": ["c18"] },
+        { "item": "c13", "label": "Al-Aqsa", "photo": "ph25", "paras": 1, "briefs": ["c05", "c14", "c20"], "briefs_title": "Jerusalem, this day" },
+        { "item": "c16", "label": "Three years of war", "layout": "quote", "kind": "Story", "photo": "ph15", "paras": 2, "briefs": ["d01"], "briefs_title": "Also from the tents" },
+        { "item": "c17", "label": "Gaza's count", "layout": "big", "kind": "Figures", "paras": 2, "briefs": ["c02", "c15"], "margin": "ledger", "margin_max": 3 },
+        { "item": "c19", "label": "The cabinet's week", "kind": "Figures", "paras": 2 }
+      ]
+    },
+    {
+      "key": "afternoon", "at": "15:30", "from": "14:05", "to": "17:24", "light": "Afternoon",
+      "title": "A call for protection",
+      "slots": [
+        { "item": "c21", "label": "Arab League", "layout": "two", "photo": "ph20", "paras": 2 }
+      ]
+    },
+    {
+      "key": "sunset", "at": "17:50", "from": "17:24", "to": "18:34", "light": "Golden hour · Sunset",
+      "title": "An olive press turns again; a year after the exchange",
+      "slots": [
+        { "item": "d02", "label": "An olive press", "kind": "Story", "paras": 2 },
+        { "item": "c24", "label": "A year after the exchange", "kind": "Figures", "paras": 2 }
+      ]
+    },
+    {
+      "key": "night-2", "at": "21:00", "from": "18:34", "to": "24:00", "light": "Dusk and night",
+      "title": "'Our country, our control', and the election delay",
+      "slots": [
+        { "item": "c25", "label": "Near Tulkarm", "layout": "quote", "photo": "ph23", "paras": 2, "briefs": ["c23"] },
+        { "item": "c26", "label": "Election delay", "paras": 2 },
+        { "item": "c27", "label": "The day closes", "kind": "Round-up", "paras": 2, "briefs": ["d03", "d04", "d05"], "briefs_title": "Also this evening" }
+      ]
+    }
+  ]
+}

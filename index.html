@@ -13,12 +13,12 @@
 <meta property="og:image" content="https://taktek-dev.github.io/in-palestine-today-prototype/assets/og.jpg">
 <meta property="og:url" content="https://taktek-dev.github.io/in-palestine-today-prototype/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg?v=6" type="image/svg+xml" data-live>
+<link rel="icon" href="favicon.svg?v=8" type="image/svg+xml" data-live>
 <link rel="preload" href="assets/fonts/piazzolla-var.woff2?v=6" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/archivo-var.woff2?v=6" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/ipt.css?v=6">
-<link rel="stylesheet" href="assets/css/book.css?v=6">
-<script src="assets/js/sun.js?v=6"></script>
+<link rel="stylesheet" href="assets/css/ipt.css?v=8">
+<link rel="stylesheet" href="assets/css/book.css?v=8">
+<script src="assets/js/sun.js?v=8"></script>
 </head>
 <body>
 <!--
@@ -127,7 +127,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <svg class="ann" aria-hidden="true"></svg>
       </div>
       <h3 class="sub">A day of the mark</h3>
-      <p class="lede">The same mark through today in Palestine, each frame in its hour’s light. Above the horizon the stop climbs one ascender-height per 72°. From sunset to the end of civil twilight (−6°) it sinks through the baseline. After that the stop is the moon, drawn in tonight’s phase.</p>
+      <p class="lede">The same mark through today in Palestine, each frame in its hour’s light. Above the horizon the stop climbs one ascender-height per 72°. From sunset to the end of civil twilight (−6°) it sinks halfway into the baseline and no further, so the word never splits. After that the stop is the moon, drawn in tonight’s phase.</p>
       <div class="markday full" data-markday></div>
 
       <h3 class="sub">The monogram</h3>
@@ -140,7 +140,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       </div>
 
       <h3 class="sub">Space and size</h3>
-      <p class="lede">Keep clear space of two sun diameters (0.41 em) on every side. The wordmark stays at least 120 px or 30 mm wide, where the stop is still a round 5 px. Below that, use the monogram, which holds down to 16 px.</p>
+      <p class="lede">Keep clear space of two sun diameters (0.41 em) on every side. The wordmark stays at least 120 px or 30 mm wide, where the stop is still a round disc a little over 3 px across. Below that, use the monogram, which holds down to 16 px.</p>
       <div class="sizes">
         <div><span class="wm" role="img" aria-label="Wordmark at 48 px" style="font-size:48px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">48 px · masthead</span></div>
         <div><span class="wm" role="img" aria-label="Wordmark at 24 px" style="font-size:24px" data-mark-fixed data-fixed-alt="2"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="sz">24 px · reading bar</span></div>
@@ -317,12 +317,12 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <div class="frames full" data-frames></div>
       <p style="margin-top:14px"><a class="btn ghost" href="home.html?loader">Replay it on the homepage</a></p>
       <dl class="timeline" style="margin-top:34px">
-        <div><dt>Horizon draws</dt><dd><b>650 ms</b></dd><dd>sine in-out, from the centre</dd><dd>A hairline across the night ground.</dd></div>
-        <div><dt>The sun rises</dt><dd><b>1200 ms</b></dd><dd>quad in-out, from 420 ms</dd><dd>From under the baseline to its real height now, warming from red to its colour. At night the moon takes the stop instead.</dd></div>
-        <div><dt>The words settle</dt><dd><b>700 ms</b></dd><dd>expo out, 110 ms apart</dd><dd>in, palestine, today, rising 0.18 em into place.</dd></div>
-        <div><dt>The lockup docks</dt><dd><b>750 ms</b></dd><dd>cubic in-out</dd><dd>The same mark moves and shrinks into the masthead while the ground turns to the light of the hour.</dd></div>
+        <div><dt>Horizon draws</dt><dd><b>560 ms</b></dd><dd>sine in-out, from the centre</dd><dd>A hairline across the night ground.</dd></div>
+        <div><dt>The sun rises</dt><dd><b>1000 ms</b></dd><dd>quad in-out, from 360 ms</dd><dd>From under the baseline to its real height now, warming from red to its colour. At night the moon takes the stop instead.</dd></div>
+        <div><dt>The words settle</dt><dd><b>640 ms</b></dd><dd>expo out, 90 ms apart</dd><dd>in, palestine, today, rising 0.18 em into place.</dd></div>
+        <div><dt>The lockup docks</dt><dd><b>680 ms</b></dd><dd>cubic in-out</dd><dd>The same mark moves and shrinks into the masthead while the ground turns to the light of the hour.</dd></div>
         <div><dt>Light changes</dt><dd><b>1100 ms</b></dd><dd>sine in-out</dd><dd>When the sun crosses into a new light, or the reader moves into another part of the day.</dd></div>
-        <div><dt>The dial draws the day</dt><dd><b>1600 ms</b></dd><dd>sine in-out, once</dd><dd>The sun’s path traces left to right, and each bead appears as the path reaches its minute.</dd></div>
+        <div><dt>The dial draws the day</dt><dd><b>1600 ms</b></dd><dd>sine in-out, once</dd><dd>The sun’s path traces left to right when the dial comes into view, and each bead appears as the line reaches its minute.</dd></div>
         <div><dt>The stop moves</dt><dd><b>1200 ms</b></dd><dd>sine in-out</dd><dd>On a light change, or while the reader drags the sun. Live, it moves a few hundredths of an em an hour.</dd></div>
       </dl>
       <h3 class="sub">What it won’t do</h3>
@@ -390,6 +390,20 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <figure style="margin:0"><div class="post story" data-post-story data-at="12:25"></div><figcaption class="cap app-cap"><b>A story</b> · 1080 × 1350. The photo stays untouched. The panel takes the light of the hour the story was filed, and the stamp gives the time and the sun.</figcaption></figure>
         <figure style="margin:0"><div class="og" data-og></div><figcaption class="cap app-cap"><b>Link preview</b> · 1200 × 630. Rendered for the hour the link is shared.</figcaption></figure>
       </div>
+      <h3 class="sub">The site, page by page</h3>
+      <p class="lede">Every template keeps the time gutter, the sun stamp and the two voices. A report is read in the light of the minute it was filed, and a desk is the same record cut by place, day by day.</p>
+      <ul class="files tpls">
+        <li><span><b><a href="home.html">The Day</a></b><span>One edition, midnight to midnight, each part of the day in its own light, with the Day Dial.</span></span></li>
+        <li><span><b><a href="news/2026-10-14-settlers-set-fire-to-mosque-car-and-olive.html">A report</a></b><span>Filed time and sun, the dek with its dateline, the sources “on whose word”, the figures, the rest of its hour, and where it sits in the day.</span></span></li>
+        <li><span><b><a href="news/2026-10-14-he-irrigated-the-tree-with-his-blood-olive.html">A story</a></b><span>The same frame at a longer measure, a full-width photograph and the quote set large.</span></span></li>
+        <li><span><b><a href="gaza.html">A desk</a></b><span>Gaza, the West Bank, Jerusalem, Prisoners and World: the record cut by place, each day with its own small sky.</span></span></li>
+        <li><span><b><a href="harvest.html">A thread</a></b><span>One running story across the days. Here, the olive harvest.</span></span></li>
+        <li><span><b><a href="days.html">The Days</a></b><span>Every edition, and the month in Palestine’s sky, row by row, clock changes included.</span></span></li>
+        <li><span><b><a href="visuals.html">In pictures</a></b><span>The places in the news from the archive, each photograph beside the report it goes with.</span></span></li>
+        <li><span><b><a href="search.html">Search</a></b><span>By words, day, desk and the light of the hour.</span></span></li>
+        <li><span><b><a href="about.html">Who we are</a></b><span>Palestine time, how we source, corrections and contact, in draft for the newsroom.</span></span></li>
+        <li><span><b><a href="404.html">Not found</a></b><span>The page that has set, at night.</span></span></li>
+      </ul>
     </div>
   </div>
 </section>
@@ -430,9 +444,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   </div>
 </footer>
 
-<script src="assets/js/marks.js?v=6"></script>
-<script src="assets/js/ipt.js?v=6"></script>
-<script src="assets/js/edition.js?v=6"></script>
-<script src="assets/js/book.js?v=6"></script>
+<script src="assets/js/marks.js?v=8"></script>
+<script src="assets/js/ipt.js?v=9"></script>
+<script src="assets/js/edition.js?v=8"></script>
+<script src="assets/js/book.js?v=8"></script>
 </body>
 </html>
