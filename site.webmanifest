@@ -1,0 +1,29 @@
+{
+  "name": "In Palestine Today",
+  "short_name": "In Palestine",
+  "start_url": "home.html",
+  "scope": "./",
+  "display": "standalone",
+  "description": "One day in Palestine, told in order, in Palestine’s time.",
+  "lang": "en",
+  "theme_color": "#15182A",
+  "background_color": "#F5F3EE",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

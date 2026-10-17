@@ -1,0 +1,57 @@
+{
+  "lead": {
+    "item": "b07",
+    "photo": "ph28",
+    "headline": "High Court asks Israel for a timetable to return 33,000 displaced to West Bank camps",
+    "dek": "Hours later, Defense Minister Israel Katz called Israel's presence in the emptied Jenin, Tulkarm and Nur Shams camps 'permanent' and said the court should not intervene.",
+    "more": ["b15", "b22"]
+  },
+  "parts": [
+    {
+      "key": "morning", "at": "08:30", "from": "06:40", "to": "10:46", "light": "Morning",
+      "title": "The camps, the court, and the rules for strikes",
+      "slots": [
+        { "item": "b01", "label": "Al-Mawasi", "paras": 2 },
+        { "item": "b02", "label": "Turmus Ayya", "paras": 2, "briefs": ["b04", "b05"], "briefs_title": "Settlers, this morning" },
+        { "item": "b03", "label": "Al-Aqsa", "photo": "ph25", "paras": 1, "briefs": ["b10", "b23"], "briefs_title": "Jerusalem, this day" },
+        { "item": "b06", "label": "Dawn arrests", "briefs": ["b08", "b11"] },
+        { "item": "b07", "label": "The camps", "layout": "big", "paras": 3, "state": "updated", "briefs": ["b13", "b24"], "briefs_title": "Later that day" },
+        { "item": "b09", "label": "Rules for strikes", "layout": "quote", "paras": 2 }
+      ]
+    },
+    {
+      "key": "midday", "at": "12:25", "from": "10:46", "to": "14:06", "light": "Midday",
+      "title": "Gaza's count, and ancient trees uprooted",
+      "slots": [
+        { "item": "b12", "label": "Gaza's count", "kind": "Figures", "paras": 2, "margin": "ledger" },
+        { "item": "b14", "label": "Ancient olives", "layout": "two", "photo": "ph30", "paras": 2 }
+      ]
+    },
+    {
+      "key": "afternoon", "at": "15:30", "from": "14:06", "to": "17:26", "light": "Afternoon",
+      "title": "Twelve days of October, counted",
+      "slots": [
+        { "item": "b15", "label": "219 attacks", "layout": "big", "kind": "Figures", "paras": 2, "briefs": ["b16", "b25"], "briefs_title": "In the groves and on the roads" },
+        { "item": "b17", "label": "A journalist held", "layout": "two", "photo": "ph21", "paras": 2 }
+      ]
+    },
+    {
+      "key": "sunset", "at": "17:50", "from": "17:26", "to": "18:35", "light": "Golden hour · Sunset",
+      "title": "Elections, and a memorial torn down",
+      "slots": [
+        { "item": "b18", "label": "Elections", "layout": "quote", "paras": 2, "briefs": ["b19"] }
+      ]
+    },
+    {
+      "key": "night-2", "at": "21:00", "from": "18:35", "to": "24:00", "light": "Dusk and night",
+      "title": "A UN count, a mosque's keys, a village's cemetery",
+      "slots": [
+        { "item": "b22", "label": "The UN count", "layout": "quote", "photo": "ph17", "paras": 2, "briefs": ["b28"] },
+        { "item": "b27", "label": "Ibrahimi Mosque", "layout": "two", "photo": "ph27", "paras": 2, "briefs": ["b21"] },
+        { "item": "b29", "label": "Al-Ras al-Ahmar", "kind": "Story", "paras": 2, "briefs": ["b30"] },
+        { "item": "b31", "label": "Umm Safa", "layout": "quote", "kind": "Story", "photo": "ph29", "paras": 3 },
+        { "item": "b32", "label": "The day closes", "kind": "Round-up", "paras": 2, "briefs": ["b20", "b26"], "briefs_title": "Also this evening" }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@ Every OpenType layout feature is kept (small caps, oldstyle/lining/tabular figur
 """
 import os
 from fontTools import subset
+from fontTools.varLib import instancer
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'research', 'font-src')
@@ -26,13 +27,15 @@ UNICODES = (
      0x2078, 0x2079, 0x2153, 0x2154, 0x00BC, 0x00BD, 0x00BE]
 )
 
+# Each face keeps only the stretch of its axes the system uses (weights 300-750 and 400-800, widths 62-100, italic at 400):
+# the variation data outside them is dead weight on every first visit. Widen a range here before using a value beyond it.
 JOBS = [
-    ('Piazzolla[opsz,wght].ttf', 'piazzolla-var.woff2'),
-    ('Piazzolla-Italic[opsz,wght].ttf', 'piazzolla-italic-var.woff2'),
-    ('Archivo[wdth,wght].ttf', 'archivo-var.woff2'),
+    ('Piazzolla[opsz,wght].ttf', 'piazzolla-var.woff2', {'wght': (300, 750)}),
+    ('Piazzolla-Italic[opsz,wght].ttf', 'piazzolla-italic-var.woff2', {'wght': 400}),   # quotes and the motto: italic is only ever 400
+    ('Archivo[wdth,wght].ttf', 'archivo-var.woff2', {'wght': (400, 800), 'wdth': (62, 100)}),
 ]
 
-for src, out in JOBS:
+for src, out, limits in JOBS:
     opts = subset.Options()
     opts.flavor = 'woff2'
     opts.layout_features = ['*']
@@ -43,6 +46,7 @@ for src, out in JOBS:
     opts.hinting = False
     opts.desubroutinize = True
     font = subset.load_font(os.path.join(SRC, src), opts)
+    font = instancer.instantiateVariableFont(font, limits)
     sub = subset.Subsetter(opts)
     sub.populate(unicodes=UNICODES)
     sub.subset(font)
