@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   gate:
-    name: gate
+    name: ci / gate
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
