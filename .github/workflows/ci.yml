@@ -1,0 +1,19 @@
+# Runs TakTek's shared CI on every PR and on main. Required check: "ci / gate".
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    uses: TakTek-Dev/ci-workflows/.github/workflows/taktek-ci.yml@main
+    # with:
+    #   php: "8.3"
+    #   workdir: app-laravel
