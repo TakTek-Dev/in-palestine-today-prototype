@@ -1,0 +1,50 @@
+# CI for public TakTek-Dev repos. Public repos cannot call the private
+# TakTek-Dev/ci-workflows and must never run on our self-hosted srv3 runners
+# (a fork's PR would run code on our server), so this gate is self-contained
+# and runs on GitHub-hosted runners, which are free for public repos.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: ci / gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Secret scan (gitleaks, new commits only)
+        env:
+          GITLEAKS_VERSION: 8.28.0
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz -C "$RUNNER_TEMP" gitleaks
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            range="origin/${{ github.base_ref }}..HEAD"
+          elif git rev-parse --verify --quiet 'HEAD~1^{commit}' >/dev/null; then
+            range="HEAD~1..HEAD"
+          else
+            range="HEAD"
+          fi
+          "$RUNNER_TEMP/gitleaks" git --no-banner --redact --log-opts="$range" .
+
+      - name: Node build
+        if: hashFiles('package.json') != ''
+        run: |
+          if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+          has() { node -e "process.exit(require('./package.json').scripts?.['$1'] ? 0 : 1)"; }
+          for s in lint typecheck type-check build test; do has $s && npm run $s; done
+          true
