@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-edition="2026-10-14">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World · In Palestine Today</title>
+<meta name="description" content="Governments, the UN and the region on Palestine, day by day.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#15182A">
+<meta property="og:title" content="World · In Palestine Today">
+<meta property="og:description" content="Governments, the UN and the region on Palestine, day by day.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://taktek-dev.github.io/in-palestine-today-prototype/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The In Palestine Today wordmark over a day of Palestine’s sky">
+<meta property="og:url" content="https://taktek-dev.github.io/in-palestine-today-prototype/world.html">
+<meta property="og:site_name" content="In Palestine Today">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="World · In Palestine Today">
+<meta name="twitter:description" content="Governments, the UN and the region on Palestine, day by day.">
+<meta name="twitter:image" content="https://taktek-dev.github.io/in-palestine-today-prototype/assets/og.jpg">
+<meta name="twitter:image:alt" content="The In Palestine Today wordmark over a day of Palestine’s sky">
+<link rel="canonical" href="https://taktek-dev.github.io/in-palestine-today-prototype/world.html">
+<link rel="icon" href="favicon.svg?v=10" type="image/svg+xml" data-live>
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="In Palestine Today" href="feed.xml">
+<link rel="preload" href="assets/fonts/piazzolla-var.woff2?v=7" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/archivo-var.woff2?v=7" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/ipt.css?v=10">
+<link rel="stylesheet" href="assets/css/pages.css?v=10">
+<script src="assets/js/sun.js?v=10"></script>
+</head>
+<body class="">
+<!--
+THESIS: The site keeps Palestine's clock and Palestine's light. One day told in order, each part in the light it happened in; it refuses the latest-first feed and the static cream broadsheet.
+OWN-WORLD: Palestinian limestone lit by the hour, as the sky really runs (violet dawn and blue hour before the sun is up, rose at sunrise and sunset, white noon, honey afternoon, night #0E1120), blended continuously down the page; shadow ink #15182A; one reserved sun colour that moves red to gold with altitude. Piazzolla for people, Archivo for the sun's instruments. Stories strung like beads on the sun's real path; hairlines and leader lines, no cards, no badges.
+STORY: A reader anywhere sees what time and light it is in Palestine, reads the day from first light to night, and leaves knowing what happened and on whose word.
+FIRST VIEWPORT: live sun strip; wordmark whose full stop sits at the sun's real altitude; lead headline left, archive photo right; the Day Dial full width beneath, slots strung on the sun's path with leader lines to the running order.
+FORM: Palestine Time, brief-pinned (grounded list position 2), seed c313c97c.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<a class="skip" href="#main">Skip to the content</a>
+
+<div class="loader" hidden aria-hidden="true">
+  <div class="lk"><span class="wm"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span><span class="hz"></span></div>
+  <p class="note"></p>
+</div>
+
+<div class="instr" aria-label="Palestine now">
+  <div class="wrap">
+    <span class="clock"><time data-clock>--:--</time><span class="tz">in Palestine</span></span>
+    <span class="hide-s" data-date></span>
+    <span class="sunline"><span data-sunstamp></span><span data-sunline>Reading the sun over Jerusalem…</span><span data-sunline-short></span></span>
+    <span class="end">
+      <span class="preview-pill" aria-live="polite">Previewing <span data-preview-time></span><button type="button" data-live>Back to live</button></span>
+      <span class="lightsw">
+        <button type="button" aria-expanded="false" aria-controls="lightpanel"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 11.5h14" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="3.2" fill="currentColor"/></svg><span data-mode-label class="ml">Palestine’s light</span></button>
+        <span class="panel" id="lightpanel" hidden>
+          <fieldset>
+            <legend class="sr">Page light</legend>
+            <label class="opt"><input type="radio" name="light" value="follow" checked><span><b>Follow Palestine’s sky</b><small>The page lightens and darkens with the sun over Jerusalem.</small></span></label>
+            <label class="opt"><input type="radio" name="light" value="day"><span><b>Always light</b><small>Each part keeps its hue on a light ground.</small></span></label>
+            <label class="opt"><input type="radio" name="light" value="dark"><span><b>Always dark</b><small>Each part keeps its hue on a dark ground.</small></span></label>
+          </fieldset>
+        </span>
+      </span>
+    </span>
+  </div>
+</div>
+
+<header class="mast">
+  <div class="wrap">
+    <div>
+      <a class="wm" href="home.html" aria-label="In Palestine Today, home"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun" aria-hidden="true"></span><span class="w-today">today</span></a>
+      <span class="motto">Bringing the world closer to Palestine, one story at a time.</span>
+    </div>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="home.html">The Day</a></li>
+        <li><a href="gaza.html">Gaza</a></li>
+        <li><a href="west-bank.html">West Bank</a></li>
+        <li><a href="jerusalem.html">Jerusalem</a></li>
+        <li><a href="prisoners.html">Prisoners</a></li>
+        <li><a href="world.html" aria-current="page">World</a></li>
+        <li><a href="stories.html">Stories</a></li>
+      </ul>
+    </nav>
+    <div class="acts">
+      <a class="iconbtn" href="search.html" aria-label="Search every day"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12.6 12.6 17 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+      <a class="btn" href="#signup">Get The Day by email</a>
+    </div>
+  </div>
+</header>
+<main id="main">
+<header class="rec-head"><div class="wrap"><h1>World</h1><p class="rec-intro">Governments, the UN and the region on Palestine, day by day.</p></div></header>
+<section class="recday" data-date="2026-10-14" aria-labelledby="rd-2026-10-14"><div class="wrap"><header class="recday-head"><h2 id="rd-2026-10-14">Wednesday 14 October</h2><p><span data-sun-brief></span> · 7 reports · <a href="home.html">The whole day</a></p></header><div class="dial mini" data-dial data-date="2026-10-14" aria-hidden="true"><div class="dial-band"><svg class="sky" role="img" aria-label=""></svg></div><ol class="dial-index" style="--n:23" hidden><li><a href="home.html#s0010" data-t="00:10" class="is-dim"><time>00:10</time> <span></span></a></li><li><a href="home.html#s0600" data-t="06:00" class="is-dim"><time>06:00</time> <span></span></a></li><li><a href="news/2026-10-14-germany-calls-gazas-humanitarian-situation-catastrophic-in-reply.html" data-t="08:31"><time>08:31</time> <span>Germany calls Gaza&#x27;s humanitarian situat</span></a></li><li><a href="home.html#s0833" data-t="08:33" class="is-dim"><time>08:33</time> <span></span></a></li><li><a href="home.html#s0900" data-t="09:00" class="is-dim"><time>09:00</time> <span></span></a></li><li><a href="home.html#s1050" data-t="10:50" class="is-dim"><time>10:50</time> <span></span></a></li><li><a href="home.html#s1127" data-t="11:27" class="is-dim"><time>11:27</time> <span></span></a></li><li><a href="home.html#s1202" data-t="12:02" class="is-dim"><time>12:02</time> <span></span></a></li><li><a href="home.html#s1206" data-t="12:06" class="is-dim"><time>12:06</time> <span></span></a></li><li><a href="home.html#s1224" data-t="12:24" class="is-dim"><time>12:24</time> <span></span></a></li><li><a href="home.html#s1318" data-t="13:18" class="is-dim"><time>13:18</time> <span></span></a></li><li><a href="home.html#s1506" data-t="15:06" class="is-dim"><time>15:06</time> <span></span></a></li><li><a href="news/2026-10-14-palestinian-central-bank-chief-urges-imf-backed-fix-for.html" data-t="15:47"><time>15:47</time> <span>Palestinian central bank chief urges IMF</span></a></li><li><a href="news/2026-10-14-plo-refugee-official-warns-unrwa-against-laying-off.html" data-t="16:12"><time>16:12</time> <span>PLO refugee official warns UNRWA against</span></a></li><li><a href="news/2026-10-14-arab-league-to-mark-its-first-remembrance-day.html" data-t="17:15"><time>17:15</time> <span>Arab League to mark its first remembranc</span></a></li><li><a href="home.html#s1725" data-t="17:25" class="is-dim"><time>17:25</time> <span></span></a></li><li><a href="home.html#s1747" data-t="17:47" class="is-dim"><time>17:47</time> <span></span></a></li><li><a href="news/2026-10-14-arab-league-oic-and-egypt-condemn-colombias-jerusalem.html" data-t="18:15"><time>18:15</time> <span>Arab League, OIC and Egypt condemn Colom</span></a></li><li><a href="home.html#s1924" data-t="19:24" class="is-dim"><time>19:24</time> <span></span></a></li><li><a href="home.html#s1934" data-t="19:34" class="is-dim"><time>19:34</time> <span></span></a></li><li><a href="news/2026-10-14-jordan-and-australia-reaffirm-two-state-solution-reject-west.html" data-t="21:15"><time>21:15</time> <span>Jordan and Australia reaffirm two-state </span></a></li><li><a href="news/2026-10-14-algeria-kuwait-and-arab-parliament-join-condemnation-of.html" data-t="23:59"><time>23:59</time> <span>Algeria, Kuwait and Arab Parliament join</span></a></li><li><a href="home.html#s2359" data-t="23:59" class="is-dim"><time>23:59</time> <span></span></a></li></ol></div></div><section class="part recpart" data-at="08:30" data-span="06:41-10:45" data-date="2026-10-14" aria-label="Morning, 06:41 to 10:45"><div class="wrap recpart-grid"><p class="span"><b>06:41–10:45</b><span class="light">Morning</span></p><ol class="rows"><li class="row" data-date="2026-10-14" data-time="08:31"><time datetime="2026-10-14T08:31+03:00">08:31</time><span class="row-stamp"><span data-stamp="08:31"></span></span><div class="row-text"><h3><a href="news/2026-10-14-germany-calls-gazas-humanitarian-situation-catastrophic-in-reply.html">Germany calls Gaza’s humanitarian situation catastrophic in reply to lawmakers</a></h3><p>Berlin told the Left party’s parliamentary group that aid deliveries need comprehensive improvement and said it has given up to €420 million since October 2023.</p><p class="row-m">Statement · World · WAFA</p></div></li></ol></div></section><section class="part recpart" data-at="15:30" data-span="14:05-17:23" data-date="2026-10-14" aria-label="Afternoon, 14:05 to 17:23"><div class="wrap recpart-grid"><p class="span"><b>14:05–17:23</b><span class="light">Afternoon</span></p><ol class="rows"><li class="row" data-date="2026-10-14" data-time="15:47"><time datetime="2026-10-14T15:47+03:00">15:47</time><span class="row-stamp"><span data-stamp="15:47"></span></span><div class="row-text"><h3><a href="news/2026-10-14-palestinian-central-bank-chief-urges-imf-backed-fix-for.html">Palestinian central bank chief urges IMF-backed fix for banking ties with Israel</a></h3><p>Yahya Shunnar said about 50 billion shekels a year flows through correspondent banking with Israeli banks, whose legal cover has been cut to two-week periods.</p><p class="row-m">Statement · World · WAFA / Palestine Monetary Authority</p></div></li><li class="row" data-date="2026-10-14" data-time="16:12"><time datetime="2026-10-14T16:12+03:00">16:12</time><span class="row-stamp"><span data-stamp="16:12"></span></span><div class="row-text"><h3><a href="news/2026-10-14-plo-refugee-official-warns-unrwa-against-laying-off.html">PLO refugee official warns UNRWA against laying off staff over budget gap</a></h3><p>Ahmad Abu Holi wrote to Commissioner-General Christian Saunders after Saunders said in Berlin that large layoffs were possible without new funding.</p><p class="row-m">Statement · World · WAFA / PLO Department of Refugee Affairs</p></div></li><li class="row" data-date="2026-10-14" data-time="17:15"><time datetime="2026-10-14T17:15+03:00">17:15</time><span class="row-stamp"><span data-stamp="17:15"></span></span><div class="row-text"><h3><a href="news/2026-10-14-arab-league-to-mark-its-first-remembrance-day.html">Arab League to mark its first remembrance day for what it calls genocide victims</a></h3><p>Arab ministers designated 17 October each year; the League says more than 700 people were killed in Gaza on that day in 2023, including at al-Ahli hospital.</p><p class="row-m">Statement · World · WAFA / Arab League</p></div></li></ol></div></section><section class="part recpart" data-at="17:50" data-span="17:23-18:33" data-date="2026-10-14" aria-label="Golden hour · Sunset, 17:23 to 18:33"><div class="wrap recpart-grid"><p class="span"><b>17:23–18:33</b><span class="light">Golden hour · Sunset</span></p><ol class="rows"><li class="row" data-date="2026-10-14" data-time="18:15"><time datetime="2026-10-14T18:15+03:00">18:15</time><span class="row-stamp"><span data-stamp="18:15"></span></span><div class="row-text"><h3><a href="news/2026-10-14-arab-league-oic-and-egypt-condemn-colombias-jerusalem.html">Arab League, OIC and Egypt condemn Colombia’s Jerusalem embassy</a></h3><p>The League cited Security Council resolutions 478 and 2334; the OIC chief wrote to Colombia’s foreign minister urging a reversal and warned of consequences.</p><p class="row-m">Statement · World · WAFA (Arab League, OIC, Egyptian Foreign Ministry statements)</p></div></li></ol></div></section><section class="part recpart" data-at="21:00" data-span="18:33-24:00" data-date="2026-10-14" aria-label="Dusk and night, 18:33 to 24:00"><div class="wrap recpart-grid"><p class="span"><b>18:33–24:00</b><span class="light">Dusk and night</span></p><ol class="rows"><li class="row" data-date="2026-10-14" data-time="21:15"><time datetime="2026-10-14T21:15+03:00">21:15</time><span class="row-stamp"><span data-stamp="21:15"></span></span><div class="row-text"><h3><a href="news/2026-10-14-jordan-and-australia-reaffirm-two-state-solution-reject-west.html">Jordan and Australia reaffirm two-state solution, reject West Bank annexation</a></h3><p>A joint statement after King Abdullah II’s talks with Prime Minister Anthony Albanese in Canberra also condemned the E1 settlement project as illegal.</p><p class="row-m">Statement · World · WAFA (Jordan-Australia joint statement)</p></div></li><li class="row" data-date="2026-10-14" data-time="23:59"><time datetime="2026-10-14T23:59+03:00">23:59</time><span class="row-stamp"><span data-stamp="23:59"></span></span><div class="row-text"><h3><a href="news/2026-10-14-algeria-kuwait-and-arab-parliament-join-condemnation-of.html">Algeria, Kuwait and Arab Parliament join condemnation of Colombia’s Jerusalem embassy</a></h3><p>Algeria said the step undermines the two-state solution; Kuwait urged the Security Council to act; the Arab Parliament’s speaker called it null and void.</p><p class="row-m">Statement · World · WAFA (Algerian and Kuwaiti foreign ministries, Arab Parliament)</p></div></li></ol></div></section></section>
+<section class="recday" data-date="2026-10-13" aria-labelledby="rd-2026-10-13"><div class="wrap"><header class="recday-head"><h2 id="rd-2026-10-13">Tuesday 13 October</h2><p><span data-sun-brief></span> · 3 reports · <a href="day/2026-10-13.html">The whole day</a></p></header><div class="dial mini" data-dial data-date="2026-10-13" aria-hidden="true"><div class="dial-band"><svg class="sky" role="img" aria-label=""></svg></div><ol class="dial-index" style="--n:17" hidden><li><a href="day/2026-10-13.html#s0023" data-t="00:23" class="is-dim"><time>00:23</time> <span></span></a></li><li><a href="day/2026-10-13.html#s0812" data-t="08:12" class="is-dim"><time>08:12</time> <span></span></a></li><li><a href="day/2026-10-13.html#s0835" data-t="08:35" class="is-dim"><time>08:35</time> <span></span></a></li><li><a href="day/2026-10-13.html#s0920" data-t="09:20" class="is-dim"><time>09:20</time> <span></span></a></li><li><a href="day/2026-10-13.html#s1035" data-t="10:35" class="is-dim"><time>10:35</time> <span></span></a></li><li><a href="day/2026-10-13.html#s1149" data-t="11:49" class="is-dim"><time>11:49</time> <span></span></a></li><li><a href="day/2026-10-13.html#s1211" data-t="12:11" class="is-dim"><time>12:11</time> <span></span></a></li><li><a href="day/2026-10-13.html#s1251" data-t="12:51" class="is-dim"><time>12:51</time> <span></span></a></li><li><a href="day/2026-10-13.html#s1315" data-t="13:15" class="is-dim"><time>13:15</time> <span></span></a></li><li><a href="day/2026-10-13.html#s1322" data-t="13:22" class="is-dim"><time>13:22</time> <span></span></a></li><li><a href="news/2026-10-13-arab-league-calls-for-international-protection-for-palestinians.html" data-t="16:38"><time>16:38</time> <span>Arab League calls for international prot</span></a></li><li><a href="day/2026-10-13.html#s1746" data-t="17:46" class="is-dim"><time>17:46</time> <span></span></a></li><li><a href="news/2026-10-13-us-state-department-claims-real-progress-toward-a.html" data-t="18:00"><time>18:00</time> <span>US State Department claims &#x27;real progres</span></a></li><li><a href="day/2026-10-13.html#s1806" data-t="18:06" class="is-dim"><time>18:06</time> <span></span></a></li><li><a href="day/2026-10-13.html#s1936" data-t="19:36" class="is-dim"><time>19:36</time> <span></span></a></li><li><a href="news/2026-10-13-australia-canada-france-and-britain-urge-abbas-to.html" data-t="22:32"><time>22:32</time> <span>Australia, Canada, France and Britain ur</span></a></li><li><a href="day/2026-10-13.html#s2353" data-t="23:53" class="is-dim"><time>23:53</time> <span></span></a></li></ol></div></div><section class="part recpart" data-at="15:30" data-span="14:05-17:24" data-date="2026-10-13" aria-label="Afternoon, 14:05 to 17:24"><div class="wrap recpart-grid"><p class="span"><b>14:05–17:24</b><span class="light">Afternoon</span></p><ol class="rows"><li class="row" data-date="2026-10-13" data-time="16:38"><time datetime="2026-10-13T16:38+03:00">16:38</time><span class="row-stamp"><span data-stamp="16:38"></span></span><div class="row-text"><h3><a href="news/2026-10-13-arab-league-calls-for-international-protection-for-palestinians.html">Arab League calls for international protection for Palestinians and condemns Colombia’s embassy plan</a></h3><p>Meeting at Palestine’s request, the council urged the Security Council to act under Chapter VII and called for a ‘Uniting for Peace’ session of the General Assembly.</p><p class="row-m">Statement · World · WAFA / Arab League</p></div></li></ol></div></section><section class="part recpart" data-at="17:50" data-span="17:24-18:34" data-date="2026-10-13" aria-label="Golden hour · Sunset, 17:24 to 18:34"><div class="wrap recpart-grid"><p class="span"><b>17:24–18:34</b><span class="light">Golden hour · Sunset</span></p><ol class="rows"><li class="row" data-date="2026-10-13" data-time="18:00"><time datetime="2026-10-13T18:00+03:00">18:00</time><span class="row-stamp"><span data-stamp="18:00"></span></span><div class="row-text"><h3><a href="news/2026-10-13-us-state-department-claims-real-progress-toward-a.html">US State Department claims ‘real progress’ toward a demilitarised Gaza a year after Sharm el-Sheikh</a></h3><p>It said rebuilding will be ‘an arduous, multi-year process’; the claims were not independently verified.</p><p class="row-m">Statement · World · The Times of Israel / US State Department</p></div></li></ol></div></section><section class="part recpart" data-at="21:00" data-span="18:34-24:00" data-date="2026-10-13" aria-label="Dusk and night, 18:34 to 24:00"><div class="wrap recpart-grid"><p class="span"><b>18:34–24:00</b><span class="light">Dusk and night</span></p><ol class="rows"><li class="row" data-date="2026-10-13" data-time="22:32"><time datetime="2026-10-13T22:32+03:00">22:32</time><span class="row-stamp"><span data-stamp="22:32"></span></span><div class="row-text"><h3><a href="news/2026-10-13-australia-canada-france-and-britain-urge-abbas-to.html">Australia, Canada, France and Britain urge Abbas to reverse the election delay</a></h3><p>The four foreign ministers said a whole generation of Palestinians has reached adulthood without a vote, and asked Israel not to obstruct elections.</p><p class="row-m">Statement · World · Haaretz; joint statement (Australian Foreign Minister&#x27;s office, via ReliefWeb)</p></div></li></ol></div></section></section>
+<section class="recday" data-date="2026-10-12" aria-labelledby="rd-2026-10-12"><div class="wrap"><header class="recday-head"><h2 id="rd-2026-10-12">Monday 12 October</h2><p><span data-sun-brief></span> · 1 report · <a href="day/2026-10-12.html">The whole day</a></p></header><div class="dial mini" data-dial data-date="2026-10-12" aria-hidden="true"><div class="dial-band"><svg class="sky" role="img" aria-label=""></svg></div><ol class="dial-index" style="--n:17" hidden><li><a href="day/2026-10-12.html#s0752" data-t="07:52" class="is-dim"><time>07:52</time> <span></span></a></li><li><a href="day/2026-10-12.html#s0845" data-t="08:45" class="is-dim"><time>08:45</time> <span></span></a></li><li><a href="day/2026-10-12.html#s0852" data-t="08:52" class="is-dim"><time>08:52</time> <span></span></a></li><li><a href="day/2026-10-12.html#s0926" data-t="09:26" class="is-dim"><time>09:26</time> <span></span></a></li><li><a href="day/2026-10-12.html#s0951" data-t="09:51" class="is-dim"><time>09:51</time> <span></span></a></li><li><a href="day/2026-10-12.html#s1031" data-t="10:31" class="is-dim"><time>10:31</time> <span></span></a></li><li><a href="day/2026-10-12.html#s1230" data-t="12:30" class="is-dim"><time>12:30</time> <span></span></a></li><li><a href="day/2026-10-12.html#s1345" data-t="13:45" class="is-dim"><time>13:45</time> <span></span></a></li><li><a href="day/2026-10-12.html#s1435" data-t="14:35" class="is-dim"><time>14:35</time> <span></span></a></li><li><a href="day/2026-10-12.html#s1532" data-t="15:32" class="is-dim"><time>15:32</time> <span></span></a></li><li><a href="day/2026-10-12.html#s1734" data-t="17:34" class="is-dim"><time>17:34</time> <span></span></a></li><li><a href="day/2026-10-12.html#s1900" data-t="19:00" class="is-dim"><time>19:00</time> <span></span></a></li><li><a href="news/2026-10-12-unesco-board-adopts-two-resolutions-on-palestine-unanimously.html" data-t="19:33"><time>19:33</time> <span>UNESCO board adopts two resolutions on P</span></a></li><li><a href="day/2026-10-12.html#s1947" data-t="19:47" class="is-dim"><time>19:47</time> <span></span></a></li><li><a href="day/2026-10-12.html#s2127" data-t="21:27" class="is-dim"><time>21:27</time> <span></span></a></li><li><a href="day/2026-10-12.html#s2216" data-t="22:16" class="is-dim"><time>22:16</time> <span></span></a></li><li><a href="day/2026-10-12.html#s2354" data-t="23:54" class="is-dim"><time>23:54</time> <span></span></a></li></ol></div></div><section class="part recpart" data-at="21:00" data-span="18:35-24:00" data-date="2026-10-12" aria-label="Dusk and night, 18:35 to 24:00"><div class="wrap recpart-grid"><p class="span"><b>18:35–24:00</b><span class="light">Dusk and night</span></p><ol class="rows"><li class="row" data-date="2026-10-12" data-time="19:33"><time datetime="2026-10-12T19:33+03:00">19:33</time><span class="row-stamp"><span data-stamp="19:33"></span></span><div class="row-text"><h3><a href="news/2026-10-12-unesco-board-adopts-two-resolutions-on-palestine-unanimously.html">UNESCO board adopts two resolutions on Palestine unanimously</a></h3><p>They cover cultural heritage in Jerusalem, Hebron and Bethlehem and educational institutions in the occupied territories.</p><p class="row-m">Statement · World · WAFA</p></div></li></ol></div></section></section>
+</main>
+
+<section class="signup part" id="signup" data-at="06:10" data-date="2026-10-14" aria-labelledby="su-h">
+  <div class="wrap">
+    <div></div>
+    <div>
+      <h2 id="su-h">The Day, at first light</h2>
+      <p>The running order in your inbox as the sky over Palestine starts to lighten. Tomorrow that is <b class="tnum" data-first-light>06:18</b> Palestine time, and a little later each day until spring. <a href="email/the-day-2026-10-14.html">See a sample</a>.</p>
+    </div>
+    <form data-signup novalidate>
+      <span class="field"><label for="em">Email address</label><input id="em" name="email" type="email" autocomplete="email" placeholder="you@example.org" required></span>
+      <button class="btn" type="submit">Sign up</button>
+      <p class="msg" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<footer class="foot part" data-at="23:50" data-date="2026-10-14">
+  <div class="wrap">
+    <div><a class="wm" href="home.html" aria-label="In Palestine Today, home"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun" aria-hidden="true"></span><span class="w-today">today</span></a></div>
+    <div><h2>Read</h2><ul><li><a href="home.html">The Day</a></li><li><a href="live/2026-10-14-west-bank-harvest.html">Live coverage</a></li><li><a href="days.html">The Days</a></li><li><a href="stories.html">Stories</a></li><li><a href="visuals.html">In pictures</a></li><li><a href="harvest.html">The olive harvest</a></li><li><a href="search.html">Search</a></li></ul></div>
+    <div><h2>About</h2><ul><li><a href="about.html">Who we are</a></li><li><a href="about.html#sourcing">How we source</a></li><li><a href="about.html#corrections">Corrections</a></li><li><a href="about.html#time">Palestine time</a></li><li><a href="index.html">Identity book</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div>
+    <div><h2>Follow</h2><ul><li><a href="https://x.com/inpalestinetoday" rel="noopener me">X</a></li><li><a href="https://www.instagram.com/inpalestinetoday" rel="noopener me">Instagram</a></li><li><a href="https://www.facebook.com/inpalestinetoday" rel="noopener me">Facebook</a></li><li><a href="https://t.me/inpalestinetoday" rel="noopener me">Telegram</a></li><li><a href="https://www.youtube.com/@inpalestinetoday" rel="noopener me">YouTube</a></li><li><a href="feed.xml">RSS feed</a></li><li><a href="#signup">The Day by email</a></li></ul></div>
+    <div class="colophon">
+      <p class="night-clock" data-night-line>It is night in Palestine.</p>
+      <p>Every report links to the source it was read from, and each figure names who counted it. Times are when the source published, in Palestine time (UTC+3). A TakTek prototype for In Palestine Today: staff names, social accounts, contact details and the newsletter service are samples to be replaced.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="rbar" role="region" aria-label="Reading position">
+  <div class="wrap">
+    <a class="wm" href="#main" aria-label="In Palestine Today, back to the top"><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun" aria-hidden="true"></span><span class="w-today">today</span></a>
+    <span class="track" aria-hidden="true"><svg></svg></span>
+    <span class="readout" aria-live="off"></span>
+  </div>
+</div>
+
+<script src="assets/js/marks.js?v=10"></script>
+<script src="assets/js/ipt.js?v=10"></script>
+<script src="assets/js/pages.js?v=10"></script>
+</body>
+</html>

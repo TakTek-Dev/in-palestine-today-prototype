@@ -187,9 +187,9 @@
   if (fr) {
     var F = [
       ['Horizon', -9, 0, 0, '0 ms'],
-      ['The sun rises', -2, 1, 0.4, '600 ms'],
+      ['The sun rises', -2, 1, 0.7, '600 ms'],
       ['Words settle', 14, 1, 1, '1100 ms'],
-      ['Its height now', 24, 1, 1, '1700 ms'],
+      ['Its height now', 24, 1, 1, '1400 ms'],
       ['Docked', 24, 0, 1, '2400 ms']
     ];
     fr.innerHTML = F.map(function (f, i) {
@@ -198,7 +198,7 @@
         (i < 4 ? '<span style="position:absolute;left:-30%;right:-30%;bottom:0;height:1px;background:currentColor;opacity:' + (i === 0 ? .5 : .35) + ';transform:scaleX(' + (i === 0 ? .55 : 1) + ')"></span>' : '') +
         '</div><figcaption>' + f[4] + ' · ' + f[0] + '</figcaption></figure>';
     }).join('');
-    $$('[data-frame-alt]', fr).forEach(function (el) { I.setMark(el, +el.getAttribute('data-frame-alt'), new Date()); });
+    $$('[data-frame-alt]', fr).forEach(function (el, i) { I.setMark(el, +el.getAttribute('data-frame-alt'), new Date()); if (i === 0) el.querySelector('.w-sun').style.visibility = 'hidden'; });
   }
 
   /* ---------- applications ---------- */

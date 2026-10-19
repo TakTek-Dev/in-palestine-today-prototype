@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-edition="2026-10-14">
+<head>
+<meta charset="utf-8">
+<title>stills</title>
+<!-- The identity's fixed images, drawn by tools/stills.mjs: app icons, the social kit, the newsletter's art. -->
+<link rel="stylesheet" href="../assets/css/ipt.css">
+<script src="../assets/js/sun.js"></script>
+<style>
+  html, body { margin: 0; background: transparent; overflow: hidden; }
+  *, *::before, *::after { transition: none !important; }
+  #s { position: relative; overflow: hidden; }
+  .fit { position: absolute; inset: 0; display: grid; place-items: center; }
+  .fit img { display: block; }
+  .sky { position: absolute; inset: 0; }
+  .sky svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .lock { position: absolute; display: grid; justify-items: center; gap: .32em; color: #15182A; --ink: #15182A; --sun: #F0A21E; }
+  .lock .wm { font-size: 1em; }
+  .lock small { font: 600 .16em/1 var(--sans); letter-spacing: .02em; color: #2C3048; }
+  /* the news templates: a report in the light of its minute */
+  .np { position: absolute; inset: 0; display: grid; background: var(--ground); color: var(--ink); }
+  .np .ph { position: relative; overflow: hidden; background: var(--sink); }
+  .np .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .np .tx { display: grid; align-content: start; gap: 0; padding: 0 72px; }
+  .np .when { display: flex; align-items: center; gap: 22px; margin: 56px 0 0; }
+  .np .t { font: 300 96px/.9 var(--serif); font-variation-settings: "opsz" 30; font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.03em; }
+  .np .st svg { width: 52px; height: 33px; display: block; }
+  .np .d { font: 600 25px/1.35 var(--sans); color: var(--ink-2); }
+  .np .d b { color: var(--ink); font-weight: 650; }
+  .np h1 { margin: 34px 0 0; font: 620 66px/1.06 var(--serif); font-variation-settings: "opsz" 30; letter-spacing: -.02em; text-wrap: balance; }
+  .np .dk { margin: 26px 0 0; font: 400 32px/1.4 var(--serif); font-variation-settings: "opsz" 18; color: var(--ink-2); max-width: 30ch; }
+  .np .ft { position: absolute; left: 72px; right: 72px; bottom: 70px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .np .ft .wm { font-size: 50px; }
+  .np .ft span.u { font: 600 24px var(--sans); color: var(--ink-2); }
+  .np .strip { position: absolute; left: 0; right: 0; bottom: 0; height: 22px; }
+  .np .strip i { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; transform: translate(-50%, -50%); border: 2.5px solid rgba(21, 24, 42, .9); }
+</style>
+</head>
+<body>
+<div id="s"></div>
+<script src="../assets/js/marks.js"></script>
+<script src="../assets/js/ipt.js"></script>
+<script>
+  var S = window.IPTSun, I = window.IPT;
+  var WM = '<span class="wm" data-mark-fixed><span class="w-in">in</span><span class="w-pal">palestine</span><span class="w-sun"></span><span class="w-today">today</span></span>';
+  function skyStops(y, m, d, step) {
+    var s = [];
+    for (var t = 0; t <= 1440; t += step) { var p = S.position(S.instant(y, m, d, t)); s.push(S.ok(S.sky(p.alt, p.rising)) + ' ' + (t / 14.4).toFixed(2) + '%'); }
+    return s.join(',');
+  }
+  function ready(stage) {
+    var imgs = Array.prototype.slice.call(stage.querySelectorAll('img'));
+    return Promise.all(imgs.map(function (i) { return i.complete ? 1 : new Promise(function (r) { i.onload = i.onerror = r; }); })).then(function () { return document.fonts.ready; });
+  }
+  window.still = function (o) {
+    var st = document.getElementById('s');
+    st.style.width = o.w + 'px'; st.style.height = o.h + 'px';
+    st.style.background = o.bg || 'transparent';
+    var ED = [2026, 10, 14];
+    if (o.kind === 'svg') {
+      // square marks fill the frame (less for a maskable icon's safe zone); wide ones take its width
+      var px = Math.round((o.ratio ? o.w : Math.min(o.w, o.h)) * (o.scale || 1));
+      st.innerHTML = '<div class="fit"><img src="' + o.src + '" width="' + px + '" height="' + Math.round(px * (o.ratio || 1)) + '" alt=""></div>';
+    } else if (o.kind === 'banner') {
+      // the day's sky across the frame, the sun's path over it, the lockup where the sky is lightest
+      var W = o.w, H = o.h, hz = H * (o.hz || .66), path = '';
+      for (var t = 0; t <= 1440; t += 10) {
+        var a = S.position(S.instant(ED[0], ED[1], ED[2], t)).alt;
+        var y = a >= 0 ? hz - a / 72 * hz * .78 : hz + Math.min(1, -a / 60) * (H - hz) * .9;
+        path += (t ? 'L' : 'M') + (t / 1440 * W).toFixed(1) + ' ' + y.toFixed(1);
+      }
+      st.innerHTML = '<div class="sky" style="background:linear-gradient(90deg,' + skyStops(ED[0], ED[1], ED[2], 15) + ')"><svg viewBox="0 0 ' + W + ' ' + H + '">' +
+        '<line x1="0" x2="' + W + '" y1="' + hz + '" y2="' + hz + '" stroke="rgba(255,255,255,.5)" stroke-width="' + Math.max(1, H / 300) + '"/>' +
+        (o.nopath ? '' : '<path d="' + path + '" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="' + Math.max(1.5, H / 180) + '"/>') + '</svg></div>' +
+        '<div class="lock" style="font-size:' + o.fs + 'px;left:' + (o.cx - 50) + '%;width:100%;top:' + o.cy + '%;transform:translateY(-50%)">' + WM + (o.line ? '<small>' + o.line + '</small>' : '') + '</div>';
+      I.setMark(st.querySelector('.wm'), o.alt == null ? 50 : o.alt, new Date());
+    } else if (o.kind === 'news') {
+      var p = o.time.split(':'), min = +p[0] * 60 + +p[1], d = o.date.split('-').map(Number);
+      var L = S.light(d[0], d[1], d[2], min, 'follow'), alt = S.position(S.instant(d[0], d[1], d[2], min)).alt;
+      var date = S.DAYS[S.weekday(d[0], d[1], d[2])] + ' ' + d[2] + ' ' + S.MONTHS[d[1] - 1] + ' ' + d[0];
+      st.innerHTML = '<div class="np" style="grid-template-rows:' + o.photoH + 'px 1fr"><div class="ph"><img src="' + o.photo + '" alt=""></div><div class="tx">' +
+        '<p class="when"><span class="t">' + o.time + '</span><span class="st">' + I.stamp(alt) + '</span><span class="d"><b>' + date + '</b><br>Palestine time · sun ' + Math.round(alt) + '°</span></p>' +
+        '<h1 style="font-size:' + (o.hfs || 66) + 'px">' + o.headline + '</h1>' + (o.dek ? '<p class="dk">' + o.dek + '</p>' : '') + '</div><div class="ft">' + WM + '<span class="u">inpalestine.today</span></div>' +
+        '<div class="strip" style="background:linear-gradient(90deg,' + skyStops(d[0], d[1], d[2], 15) + ')"><i style="left:' + (min / 14.4) + '%;background:' + S.ok(S.sunColour(alt)) + '"></i></div></div>';
+      S.applyTokens(st.querySelector('.np'), L.tokens);
+      I.setMark(st.querySelector('.wm'), alt, new Date());
+    } else if (o.kind === 'photo') {
+      st.innerHTML = '<img src="' + o.src + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">';
+    } else if (o.kind === 'strip') {
+      // the newsletter's sky: the edition's day with a bead for each slot
+      var beads = (o.times || []).map(function (tt) {
+        var q = tt.split(':'), mm = +q[0] * 60 + +q[1], aa = S.position(S.instant(ED[0], ED[1], ED[2], mm)).alt;
+        return '<i style="position:absolute;top:50%;left:' + (mm / 14.4) + '%;width:' + (o.h * .42) + 'px;height:' + (o.h * .42) + 'px;border-radius:50%;transform:translate(-50%,-50%);border:' + (o.h / 16) + 'px solid rgba(21,24,42,.9);background:' + (aa > -6 ? S.ok(S.sunColour(aa)) : '#E9E8F0') + '"></i>';
+      }).join('');
+      st.innerHTML = '<div class="sky" style="background:linear-gradient(90deg,' + skyStops(ED[0], ED[1], ED[2], 10) + ')">' + beads + '</div>';
+    }
+    return ready(st);
+  };
+</script>
+</body>
+</html>

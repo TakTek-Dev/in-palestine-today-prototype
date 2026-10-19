@@ -25,21 +25,26 @@
     catch (e) { try { new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Jerusalem' }).format(new Date()); return 'Asia/Jerusalem'; } catch (e2) { return null; } }
   })();
 
-  // Palestine's UTC offset in minutes for a given instant.
+  // Palestine's UTC offset in minutes for a given instant. The offset only changes on the hour,
+  // twice a year, so it is kept per UTC hour: a page asks for thousands of instants as it paints.
+  var OFFSETS = {};
   function offsetAt(date) {
     if (!tzOk) return 180;
-    var p = parts(date);
+    var hour = Math.floor(date.getTime() / 3600000);
+    if (OFFSETS[hour] != null) return OFFSETS[hour];
+    var p = parts(new Date(hour * 3600000));
     var asUTC = Date.UTC(p.y, p.m - 1, p.d, p.hh, p.mm, p.ss);
-    return Math.round((asUTC - date.getTime()) / 60000);
+    return (OFFSETS[hour] = Math.round((asUTC - hour * 3600000) / 60000));
   }
 
   // Calendar parts of an instant in Palestine time.
+  var FMT = null;   // building an Intl formatter is slow: build it once
   function parts(date) {
     if (!tzOk) {
       var t = new Date(date.getTime() + 180 * 60000);
       return { y: t.getUTCFullYear(), m: t.getUTCMonth() + 1, d: t.getUTCDate(), hh: t.getUTCHours(), mm: t.getUTCMinutes(), ss: t.getUTCSeconds(), wd: t.getUTCDay() };
     }
-    var f = new Intl.DateTimeFormat('en-GB', { timeZone: tzOk, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23', weekday: 'short' });
+    var f = FMT || (FMT = new Intl.DateTimeFormat('en-GB', { timeZone: tzOk, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23', weekday: 'short' }));
     var o = {};
     f.formatToParts(date).forEach(function (x) { o[x.type] = x.value; });
     var wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(o.weekday);
